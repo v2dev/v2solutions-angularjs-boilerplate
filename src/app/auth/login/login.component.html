@@ -1,0 +1,27 @@
+<ng-container *ngIf="!authenticator; else auth">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="card shadow p-3 rounded">
+            <h3 class="text-center my-4 fw-light fs-1">Login</h3>
+            <form class="form-group" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="mb-2">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="text" class="form-control" id="email" placeholder="Enter your email"
+                        formControlName="email" autocomplete="off" />
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password"
+                        formControlName="password" />
+                </div>
+                <div class="my-3">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <a routerLink="/forgot-password" class="float-end me-2"><small>Forgot password?</small></a>
+                </div>
+                <small>Don't have account? Sign up <a routerLink="/register" id="signup">here</a></small>
+            </form>
+        </div>
+    </div>
+</ng-container>
+<ng-template #auth>
+    <app-authenticator [user]="user"></app-authenticator>
+</ng-template>
