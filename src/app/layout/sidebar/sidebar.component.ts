@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { navbarData } from './nav-data';
+import { NavDataType, navbarData } from './nav-data';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth/auth.service';
 
@@ -32,11 +32,12 @@ export class SidebarComponent {
     this.onToggleSidebar.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
-  onClick(route: string) {
-    if (route == 'login') {
+  onClick(route: NavDataType) {
+    if (route.routerLink == 'login') {
+      route.visible = false;
       this.authService.logout();
     } else {
-      this.router.navigate([route]);
+      this.router.navigate([route.routerLink]);
     }
   }
 

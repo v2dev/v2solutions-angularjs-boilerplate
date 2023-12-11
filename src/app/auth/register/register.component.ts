@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@app/services/auth/auth.service';
+import { emailValidator } from '@app/shared/validators/email-validator';
+import { matchValue } from '@app/shared/validators/match-value-validator';
 
 @Component({
   selector: 'app-register',
@@ -26,10 +28,12 @@ export class RegisterComponent {
   createForm() {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, emailValidator()]],
       country: ['', Validators.required],
-      password: ['', Validators.required]
-    })
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', Validators.required]
+    },
+      { validator: matchValue('password', 'confirmPassword') });
   }
 
   onSubmit() {
@@ -42,6 +46,10 @@ export class RegisterComponent {
     }, (error) => {
       console.error('Something went wrong:', error);
     })
+  }
+
+  get form() {
+    return this.registerForm?.controls;
   }
 
 }

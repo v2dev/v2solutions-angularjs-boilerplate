@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth/auth.service';
+import { matchValue } from '@app/shared/validators/match-value-validator';
 
 @Component({
   selector: 'app-reset-password',
@@ -17,9 +18,10 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
     this.resetPassForm = this.fb.group({
       otp: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required]
-    });
+    },
+      { validator: matchValue('password', 'confirmPassword') });
   }
 
   onSubmit() {
@@ -31,5 +33,9 @@ export class ResetPasswordComponent implements OnInit {
     }, (error) => {
       console.error('Something went wrong:', error);
     })
+  }
+
+  get form() {
+    return this.resetPassForm.controls;
   }
 }

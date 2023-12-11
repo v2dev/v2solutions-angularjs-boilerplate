@@ -1,17 +1,27 @@
-export const navbarData = [
+export interface NavDataType {
+    routerLink: string,
+    icon: string,
+    label: string,
+    visible: boolean
+}
+
+export const navbarData: NavDataType[] = [
     {
         routerLink: 'home',
         icon: 'fa fa-home',
-        label: 'Home'
+        label: 'Home',
+        visible: true,
     },
     {
         routerLink: 'employee',
         icon: 'fa fa-users',
-        label: 'Employee'
+        label: 'Employee',
+        visible: true,
     },
     {
         routerLink: 'login',
         icon: 'fa fa-power-off',
-        label: 'Logout'
+        label: 'Logout',
+        visible: true,
     }
 ]

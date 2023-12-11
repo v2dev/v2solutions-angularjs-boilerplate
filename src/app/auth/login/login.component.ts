@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth/auth.service';
+import { emailValidator } from '@app/shared/validators/email-validator';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,9 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   authenticator: boolean = false;
   user: string = '';
+showPassword: any;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { 
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     if (this.authService.isAuthenticatedUser()) {
       this.router.navigate(['home']);
     }
@@ -39,6 +41,10 @@ export class LoginComponent implements OnInit {
     }, (error) => {
       console.error('Something went wrong:', error);
     })
+  }
+
+  get form() {
+    return this.loginForm.controls
   }
 
 }

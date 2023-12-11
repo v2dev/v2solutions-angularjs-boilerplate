@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '@app/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { emailValidator } from '@app/shared/validators/email-validator';
 
 @Component({
   selector: 'app-forgot-password',
@@ -8,11 +10,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent {
+  forgotPasswordForm!: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+    this.createForm();
+  }
 
-  onSubmit(email: HTMLInputElement) {
-    this.authService.forgotPassword(email.value).subscribe(res => {
+  createForm() {
+    this.forgotPasswordForm = this.fb.group({
+      email: ['', [Validators.required, emailValidator()]],
+    })
+  }
+
+  onSubmit() {
+    const email = this.forgotPasswordForm.get('email')?.value;
+    this.authService.forgotPassword(email).subscribe(res => {
       if (res) {
         alert(res.message);
         this.router.navigate(['reset-password']);
@@ -20,5 +32,9 @@ export class ForgotPasswordComponent {
     }, (error) => {
       console.error('Something went wrong:', error);
     })
+  }
+
+  get form() {
+    return this.forgotPasswordForm.controls;
   }
 }
