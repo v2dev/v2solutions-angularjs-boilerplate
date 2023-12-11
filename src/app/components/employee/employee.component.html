@@ -18,50 +18,11 @@
         </div>
     </div>
     <div class="card" style="width:100%;">
-        <div class="card-body">
-            <div class="mb-3">
-                <input class="form-control" type="text" id="search" placeholder="Search by Name..." autocomplete="off"
-                    #searchText>
-            </div>
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th *ngFor="let column of employeesColumns">{{column.label}}
-                            <ng-container *ngIf="column.name !=='actions'">
-                                <i class="fa fa-sort" *ngIf="sortedColumn !== column.name"
-                                    (click)=" onSorting(column.name, 'asc' )"></i>
-                            </ng-container>
-                            <ng-container *ngIf="column.name !=='actions'">
-                                <i class="fa fa-sort-up" *ngIf="sortedColumn === column.name && sortingOrder === 'asc'"
-                                    (click)="onSorting(column.name, 'desc')"></i>
-                                <i class="fa fa-sort-down"
-                                    *ngIf="sortedColumn === column.name && sortingOrder === 'desc'"
-                                    (click)="onSorting(column.name, 'asc')"></i>
-                            </ng-container>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let employee of employeesData | paginate: pagingConfig;">
-                        <td>{{employee.name}}</td>
-                        <td>{{employee.email}}</td>
-                        <td>{{employee.dob | date:'dd/MM/yyy'}}</td>
-                        <td>{{employee.designation}}</td>
-                        <td>{{employee.education}}</td>
-                        <td>
-                            <i class="fa fa-pencil me-3" data-bs-target="#staticBackdrop"
-                                (click)="editEmployeeBtnClick(employee._id)"></i>
-                            <i class="fa fa-trash" (click)="deleteEmployeeBtnClick(employee._id)"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <span *ngIf="employeesData.length==0">No record found!</span>
-            <app-pagination [itemsPerPageList]="pagingConfig.itemsPerPageList"
-                [itemPerPageCount]="pagingConfig.itemsPerPage" (pageChange)="onPageChange($event)"
-                (recordPerPageChange)="onRecordPerPageChange($event)">
-            </app-pagination>
-        </div>
+        <table-component [tableData]="employeesData" [tableColumns]="employeesColumns" [sortColumn]="sortedColumn"
+            [sortOrder]="sortingOrder" [pagingConfig]="pagingConfig" (onSort)="onSorting($event)"
+            (getEmployees)="getEmployees()" (onEdit)="editEmployeeBtnClick($event)"
+            (onDelete)="deleteEmployeeBtnClick($event)" (onSearch)="onSearch($event)">
+        </table-component>
     </div>
 </div>
 

@@ -13,8 +13,6 @@ declare var window: any;
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent implements OnInit, AfterViewInit {
-  limit: number = 10;
-  page: number = 1;
   filterStr: string = '';
   employeesData: Employee[] = [];
   addEmployeeForm!: FormGroup;
@@ -50,7 +48,6 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     this.formModal = new window.bootstrap.Modal(document.getElementById('form'));
     // this.confirmModal = new window.bootstrap.Modal(document.getElementById('confirmModal'));
   }
-
 
   ngAfterViewInit() {
     if (this.searchTextRef) {
@@ -149,16 +146,20 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   }
 
   deleteEmployeeBtnClick(empId: string | undefined) {
-    // this.confirmModal.show()
     this.employeeService.deleteEmployee(empId).subscribe((res: any) => {
       alert(res.message);
       this.getEmployees();
     })
   }
 
-  onSorting(colName: string, sortOrder: string) {
-    this.sortingOrder = sortOrder;
-    this.sortedColumn = colName;
+  onSearch(searchText: string) {
+    this.filterStr = searchText;
+    this.getEmployees();
+  }
+
+  onSorting(args: any) {
+    this.sortingOrder = args.sortOrder;
+    this.sortedColumn = args.colName;
     this.getEmployees();
   }
 

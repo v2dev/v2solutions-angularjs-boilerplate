@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Employee } from '@app/models/employee';
 import { PagingConfig } from '@app/models/paging-config';
 import { TableColumns } from '@app/models/table-columns';
+import { debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'table-component',
@@ -11,11 +12,14 @@ import { TableColumns } from '@app/models/table-columns';
 export class TableComponentComponent {
   @Input() tableData: Employee[] = [];
   @Input() tableColumns: TableColumns[] = [];
-  @Input() sortColumn: string = '';
-  @Input() sortOrder: string = '';
+  @Input() sortColumn: string = 'name';
+  @Input() sortOrder: string = 'asc';
   @Output() getEmployees: EventEmitter<any> = new EventEmitter();
-  @Output() editRecordClick: EventEmitter<any> = new EventEmitter();
-  @Output() deleteRecordClick: EventEmitter<any> = new EventEmitter();
+  @Output() onSort: EventEmitter<any> = new EventEmitter();
+  @Output() onEdit: EventEmitter<any> = new EventEmitter();
+  @Output() onDelete: EventEmitter<any> = new EventEmitter();
+  @Output() onSearch: EventEmitter<any> = new EventEmitter();
+  @ViewChild('searchText') searchTextRef!: ElementRef;
   @Input() pagingConfig: PagingConfig = {
     itemsPerPageList: [5, 10, 20, 50],
     itemsPerPage: 10,
@@ -23,18 +27,27 @@ export class TableComponentComponent {
     totalItems: 0
   };
 
+
+  ngAfterViewInit() {
+    if (this.searchTextRef) {
+      fromEvent(this.searchTextRef.nativeElement, 'keyup')
+        .pipe(debounceTime(500), distinctUntilChanged()).subscribe((res: any) => {
+          const searchText = this.searchTextRef.nativeElement.value;
+          this.onSearch.emit(searchText);
+        })
+    }
+  }
+
   editRecord(empId: string | undefined) {
-    this.editRecordClick.emit(empId);
+    this.onEdit.emit(empId);
   }
 
   deleteRecord(empId: string | undefined) {
-    this.deleteRecordClick.emit(empId);
+    this.onDelete.emit(empId);
   }
 
-  onSort(colName: string, sortOrder: string) {
-    this.sortOrder = sortOrder;
-    this.sortColumn = colName;
-    this.getEmployees.emit();
+  onSortClick(colName: string, sortOrder: string) {
+    this.onSort.emit({ colName, sortOrder });
   }
 
   onPageChange(args: number) {
