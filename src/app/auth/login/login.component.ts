@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth/auth.service';
 import { emailValidator } from '@app/shared/validators/email-validator';
+import { map, mergeMap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -35,11 +36,13 @@ export class LoginComponent implements OnInit {
   }
 
   socialLogin() {
-    this.socialAuthService.authState.subscribe((user) => {
-      this.socialUser = user;
-      this.isLoggedin = user != null;
-      console.log(this.socialUser);
-    });
+    this.authService.socialLogin().subscribe(res => {
+      if (res && res.success) {
+        this.authService.setToken(res.jwtToken);
+        this.authService.isAuthenticated = true;
+        this.router.navigate(['/home']);
+      }
+    })
   }
 
   createForm() {
@@ -59,7 +62,11 @@ export class LoginComponent implements OnInit {
       }
     }, (error) => {
       this.submitted = false;
-      console.error('Something went wrong:', error);
+      if (error?.error?.error) {
+        alert(error.error.error)
+      } else {
+        console.error('Something went wrong:', error);
+      }
     })
   }
 

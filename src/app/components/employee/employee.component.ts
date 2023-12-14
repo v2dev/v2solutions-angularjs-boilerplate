@@ -23,7 +23,6 @@ export class EmployeeComponent implements OnInit {
   ];
   sortingOrder: string = 'asc';
   sortedColumn = 'name';
-  @ViewChild('searchText') searchTextRef!: ElementRef;
   @ViewChild(AddEmployeeComponent) addEmployeeComponent?: AddEmployeeComponent;
 
   pagingConfig: PagingConfig = {

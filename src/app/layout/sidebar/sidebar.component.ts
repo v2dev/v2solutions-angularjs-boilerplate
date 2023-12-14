@@ -26,14 +26,8 @@ export class SidebarComponent {
     this.onToggleSidebar.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
- /*  closeSidebar(): void {
-    this.collapsed = false;
-    this.onToggleSidebar.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
-  } */
-
   onClick(route: NavDataType) {
     if (route.routerLink == 'login') {
-      route.visible = false;
       this.authService.logout();
     } else {
       this.router.navigate([route.routerLink]);

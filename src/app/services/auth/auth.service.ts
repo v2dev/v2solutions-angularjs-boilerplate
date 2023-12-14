@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginUser, RegisterUser } from '../../models/index';
 import { environment } from 'src/environments/environment.development';
-import { Observable, map } from 'rxjs';
+import { Observable, map, mergeMap } from 'rxjs';
 import { Router } from '@angular/router';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
   baseURL: string = environment.apiUrl;
   isAuthenticated: boolean;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private socialAuthService: SocialAuthService) {
     this.isAuthenticated = !!this.getToken();
   }
 
@@ -20,12 +21,22 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  public setToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+
   login(user: LoginUser): Observable<any> {
     return this.http.post(`${this.baseURL}/login`, user)
   }
 
-  googleLogin(): Observable<any> {
-    return this.http.get(`${this.baseURL}/google`);
+  socialLogin(): Observable<any> {
+    return this.socialAuthService.authState.pipe(map(res => res), mergeMap(data => {
+      const obj = {
+        token: data.idToken,
+      }
+      return this.http.post(`${this.baseURL}/verify-google-token`, obj)
+    })
+    );
   }
 
   register(userDetails: RegisterUser): Observable<any> {

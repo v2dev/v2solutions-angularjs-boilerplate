@@ -31,7 +31,7 @@ export class AuthenticatorComponent {
     this.authService.verifyOtp(data).subscribe(res => {
       if (res) {
         this.submitted = false;
-        localStorage.setItem('token', res.jwtToken);
+        this.authService.setToken(res.jwtToken);
         this.router.navigate(['/home']);
       }
     }, (error) => {
