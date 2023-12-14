@@ -7,6 +7,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthenticatorComponent } from './authenticator/authenticator.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+  GoogleLoginProvider,
+  GoogleSigninButtonDirective,
+  GoogleSigninButtonModule,
+} from '@abacritt/angularx-social-login';
+import { SocialAuthServiceData } from '@app/shared/social-auth-config/socialAuthServiceConfig';
 
 
 @NgModule({
@@ -21,7 +29,10 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
-  ]
+    RouterModule,
+    SocialLoginModule,
+    GoogleSigninButtonModule
+  ],
+  providers: [SocialAuthServiceData]
 })
 export class AuthModule { }

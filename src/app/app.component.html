@@ -1,8 +1,6 @@
 <main>
-  <app-sidebar *ngIf="showSidebar()" (onToggleSidebar)="onToggleSidebar($event)"></app-sidebar>
+  <app-sidebar (onToggleSidebar)="onToggleSidebar($event)"></app-sidebar>
   <div class="display-area p-3" [ngClass]="{'display-area-shrink':isSidebarCollapsed }">
-    <!-- <div class="h-100 d-flex align-items-center justify-content-center"> -->
     <router-outlet></router-outlet>
-    <!-- </div> -->
   </div>
 </main>

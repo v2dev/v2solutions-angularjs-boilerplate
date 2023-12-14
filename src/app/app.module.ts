@@ -16,6 +16,8 @@ import { ModalComponent } from './layout/modal/modal.component';
 import { ConfirmationModalComponent } from './layout/confirmation-modal/confirmation-modal.component';
 import { TableComponentComponent } from './shared/components/table-component/table-component.component';
 import { PaginationComponent } from './layout/pagination/pagination.component';
+import { BreadcrumbComponent } from './layout/breadcrumb/breadcrumb.component';
+import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 
 
 @NgModule({
@@ -28,6 +30,8 @@ import { PaginationComponent } from './layout/pagination/pagination.component';
     ConfirmationModalComponent,
     TableComponentComponent,
     PaginationComponent,
+    BreadcrumbComponent,
+    AddEmployeeComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +41,7 @@ import { PaginationComponent } from './layout/pagination/pagination.component';
     ReactiveFormsModule,
     NgxPaginationModule
   ],
+  exports: [],
   providers: [tokenInterceptorProviders],
   bootstrap: [AppComponent]
 })

@@ -11,6 +11,7 @@ import { emailValidator } from '@app/shared/validators/email-validator';
 })
 export class ForgotPasswordComponent {
   forgotPasswordForm!: FormGroup;
+  submitted: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.createForm();
@@ -23,13 +24,16 @@ export class ForgotPasswordComponent {
   }
 
   onSubmit() {
+    this.submitted = true;
     const email = this.forgotPasswordForm.get('email')?.value;
     this.authService.forgotPassword(email).subscribe(res => {
       if (res) {
         alert(res.message);
+        this.submitted = false;
         this.router.navigate(['reset-password']);
       }
     }, (error) => {
+      this.submitted = false;
       console.error('Something went wrong:', error);
     })
   }

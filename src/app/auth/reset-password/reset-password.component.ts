@@ -11,6 +11,7 @@ import { matchValue } from '@app/shared/validators/match-value-validator';
 })
 export class ResetPasswordComponent implements OnInit {
   resetPassForm!: FormGroup;
+  submitted: boolean = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) { }
 
@@ -25,12 +26,15 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
     this.authService.resetPassword(this.resetPassForm.value).subscribe(res => {
       if (res) {
         alert(res.message);
+        this.submitted = false;
         this.router.navigate(['login']);
       }
     }, (error) => {
+      this.submitted = false;
       console.error('Something went wrong:', error);
     })
   }

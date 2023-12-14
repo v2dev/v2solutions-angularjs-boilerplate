@@ -15,18 +15,18 @@ export class EmployeeService {
 
   getEmployees(obj: any): Observable<any> {
     const { limit, page, filterStr, sortOrder, sortColumn } = obj;
-    return this.http.get(`${this.baseURL}/employee/get?limit=${limit}&page=${page}&filter=${filterStr}&sort=${sortOrder}&sortedColumn=${sortColumn}`);
+    return this.http.get(`${this.baseURL}/employees?limit=${limit}&page=${page}&filter=${filterStr}&sort=${sortOrder}&sortedColumn=${sortColumn}`);
   }
 
   addEmployee(user: Employee): Observable<any> {
-    return this.http.post(`${this.baseURL}/employee/add`, user);
+    return this.http.post(`${this.baseURL}/employees`, user);
   }
 
   editEmployee(id: string | undefined, data: Employee): Observable<any> {
-    return this.http.put(`${this.baseURL}/employee/update/${id}`, data);
+    return this.http.put(`${this.baseURL}/employees/${id}`, data);
   }
 
   deleteEmployee(id: string | undefined): Observable<any> {
-    return this.http.delete(`${this.baseURL}/employee/delete/${id}`);
+    return this.http.delete(`${this.baseURL}/employees/${id}`);
   }
 }

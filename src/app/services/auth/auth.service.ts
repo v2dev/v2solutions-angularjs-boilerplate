@@ -4,8 +4,6 @@ import { LoginUser, RegisterUser } from '../../models/index';
 import { environment } from 'src/environments/environment.development';
 import { Observable, map } from 'rxjs';
 import { Router } from '@angular/router';
-import { Employee } from '@app/models/employee';
-
 
 @Injectable({
   providedIn: 'root'
@@ -18,29 +16,33 @@ export class AuthService {
     this.isAuthenticated = !!this.getToken();
   }
 
-  public getToken() {
+  public getToken(): string | null {
     return localStorage.getItem('token');
   }
 
   login(user: LoginUser): Observable<any> {
-    return this.http.post(`${this.baseURL}/user/login`, user)
+    return this.http.post(`${this.baseURL}/login`, user)
+  }
+
+  googleLogin(): Observable<any> {
+    return this.http.get(`${this.baseURL}/google`);
   }
 
   register(userDetails: RegisterUser): Observable<any> {
-    return this.http.post(`${this.baseURL}/user/signup`, userDetails)
+    return this.http.post(`${this.baseURL}/signup`, userDetails)
   }
 
   forgotPassword(email: string): Observable<any> {
     const data = { email }
-    return this.http.post(`${this.baseURL}/user/forgot-password`, data);
+    return this.http.post(`${this.baseURL}/forgot-password`, data);
   }
 
   resetPassword(data: object): Observable<any> {
-    return this.http.post(`${this.baseURL}/user/reset-password`, data);
+    return this.http.post(`${this.baseURL}/reset-password`, data);
   }
 
   verifyOtp(data: object): Observable<any> {
-    return this.http.post(`${this.baseURL}/user/mfa-verify`, data).pipe(map(response => {
+    return this.http.post(`${this.baseURL}/mfa-verify`, data).pipe(map(response => {
       this.isAuthenticated = true;
       return response;
     }));

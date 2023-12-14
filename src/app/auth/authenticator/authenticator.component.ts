@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth/auth.service';
 
@@ -8,19 +9,33 @@ import { AuthService } from '@app/services/auth/auth.service';
   styleUrls: ['./authenticator.component.scss']
 })
 export class AuthenticatorComponent {
+  authenticatorForm!: FormGroup;
   @Input() imgUrl!: string;
   @Input() user!: string;
+  submitted: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
+    this.authenticatorForm = this.fb.group({
+      otp: ['', [Validators.required, Validators.minLength(6)]],
+    })
+  }
 
-  onSubmit(code: HTMLInputElement) {
-    const data = { email: this.user, mfaToken: code.value }
+  get form() {
+    return this.authenticatorForm.controls;
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    const otp = this.authenticatorForm.get('otp')?.value;
+    const data = { email: this.user, mfaToken: otp }
     this.authService.verifyOtp(data).subscribe(res => {
       if (res) {
+        this.submitted = false;
         localStorage.setItem('token', res.jwtToken);
-        this.router.navigate(['/home'])
+        this.router.navigate(['/home']);
       }
     }, (error) => {
+      this.submitted = false;
       console.error('Something went wrong:', error);
     })
   }

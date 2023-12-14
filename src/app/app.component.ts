@@ -16,11 +16,6 @@ export class AppComponent {
   isSidebarCollapsed: boolean = false;
   screenWidth = 0;
 
-  constructor(private authService: AuthService) {
-  }
-
-  showSidebar = computed(() => this.authService.isAuthenticated);
-
   onToggleSidebar(data: SidebarToggle): void {
     this.isSidebarCollapsed = data.collapsed;
     this.screenWidth = data.screenWidth;

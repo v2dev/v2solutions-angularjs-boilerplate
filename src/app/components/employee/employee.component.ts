@@ -1,26 +1,18 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, computed, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Employee } from '@app/models/employee';
 import { PagingConfig } from '@app/models/paging-config';
 import { AuthService } from '@app/services/auth/auth.service';
 import { EmployeeService } from '@app/services/employee/employee.service';
-import { debounceTime, distinctUntilChanged, every, fromEvent } from 'rxjs';
-declare var window: any;
+import { AddEmployeeComponent } from '../add-employee/add-employee.component';
 
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss']
 })
-export class EmployeeComponent implements OnInit, AfterViewInit {
+export class EmployeeComponent implements OnInit {
   filterStr: string = '';
   employeesData: Employee[] = [];
-  addEmployeeForm!: FormGroup;
-  employeeId: string | undefined;
-  formModal: any;
-  title!: string;
-  modalSubmitBtnName = 'Add';
-  // confirmModal: any;
   employeesColumns = [
     { name: 'name', label: 'Name' },
     { name: 'email', label: 'Email' },
@@ -32,6 +24,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   sortingOrder: string = 'asc';
   sortedColumn = 'name';
   @ViewChild('searchText') searchTextRef!: ElementRef;
+  @ViewChild(AddEmployeeComponent) addEmployeeComponent?: AddEmployeeComponent;
 
   pagingConfig: PagingConfig = {
     itemsPerPageList: [5, 10, 20, 50],
@@ -40,28 +33,10 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     totalItems: 0
   }
 
-  constructor(private employeeService: EmployeeService, private fb: FormBuilder, private authService: AuthService) { }
+  constructor(private employeeService: EmployeeService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.createForm();
     this.getEmployees();
-    this.formModal = new window.bootstrap.Modal(document.getElementById('form'));
-    // this.confirmModal = new window.bootstrap.Modal(document.getElementById('confirmModal'));
-  }
-
-  ngAfterViewInit() {
-    if (this.searchTextRef) {
-      fromEvent(this.searchTextRef.nativeElement, 'keyup')
-        .pipe(debounceTime(500), distinctUntilChanged()).subscribe((res: any) => {
-          const searchText = this.searchTextRef.nativeElement.value;
-          this.filterStr = searchText;
-          this.getEmployees();
-        })
-    }
-  }
-
-  get form() {
-    return this.addEmployeeForm.controls;
   }
 
   getEmployees() {
@@ -73,8 +48,8 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
       sortColumn: this.sortedColumn
     };
     this.employeeService.getEmployees(obj).subscribe((res: any) => {
-      if (res && res.employees) {
-        this.employeesData = res.employees;
+      if (res && res.data) {
+        this.employeesData = res.data;
         this.pagingConfig.totalItems = res.totalEmployees;
       }
     }, (error) => {
@@ -86,63 +61,12 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     })
   }
 
-  createForm() {
-    this.addEmployeeForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      dob: ['', [Validators.required, Validators.maxLength(10)]],
-      designation: ['', Validators.required],
-      education: ['', Validators.required],
-    });
-  }
-
   addEmployeeBtnClick() {
-    this.title = 'Add Employee';
-    this.modalSubmitBtnName = 'Add';
-    this.addEmployeeForm.reset();
-    this.openModal();
-  }
-
-  openModal() {
-    this.formModal.show();
-  }
-
-  closeModal() {
-    this.formModal.hide();
-  }
-
-  onSubmit() {
-    if (this.modalSubmitBtnName == 'Add') {
-      this.addEmployee();
-    } else if (this.modalSubmitBtnName == 'Update') {
-      this.editEmployee();
-    }
-    this.closeModal();
-  }
-
-  addEmployee() {
-    this.employeeService.addEmployee(this.addEmployeeForm.value).subscribe((res: any) => {
-      alert(res.message);
-      this.getEmployees();
-    })
+    this.addEmployeeComponent?.onAddEmployee();
   }
 
   editEmployeeBtnClick(empId: string | undefined) {
-    this.employeeId = empId;
-    this.title = 'Edit Employee';
-    this.modalSubmitBtnName = 'Update';
-    this.openModal();
-    const employee: any = this.employeesData.find(emp => emp._id == empId);
-    const date = new Date(employee.dob).toISOString().slice(0, 10);
-    employee.dob = date;
-    this.addEmployeeForm.patchValue(employee);
-  }
-
-  editEmployee() {
-    this.employeeService.editEmployee(this.employeeId, this.addEmployeeForm.value).subscribe((res: any) => {
-      alert(res.message);
-      this.getEmployees();
-    })
+    this.addEmployeeComponent?.editEmployeeBtnClick(empId);
   }
 
   deleteEmployeeBtnClick(empId: string | undefined) {
@@ -167,10 +91,10 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     this.pagingConfig.currentPage = args;
     this.getEmployees();
   }
+
   onRecordPerPageChange(args: any) {
     this.pagingConfig.itemsPerPage = args.value;
     this.pagingConfig.currentPage = 1;
     this.getEmployees();
   }
-
 }

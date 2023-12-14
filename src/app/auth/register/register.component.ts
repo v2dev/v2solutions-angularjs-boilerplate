@@ -15,6 +15,7 @@ export class RegisterComponent {
     { id: 'in', name: 'India' },
     { id: 'us', name: 'United States' }
   ];
+  submitted: boolean = false;
   authenticator: boolean = false;
   imgUrl: string = '';
   user: string = '';
@@ -37,6 +38,7 @@ export class RegisterComponent {
   }
 
   onSubmit() {
+    this.submitted = true;
     this.authService.register(this.registerForm.value).subscribe(res => {
       if (res) {
         this.authenticator = true;
@@ -44,6 +46,7 @@ export class RegisterComponent {
         this.user = this.registerForm.value.email;
       }
     }, (error) => {
+      this.submitted = false;
       console.error('Something went wrong:', error);
     })
   }

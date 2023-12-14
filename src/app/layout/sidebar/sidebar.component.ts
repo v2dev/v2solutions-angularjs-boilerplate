@@ -17,7 +17,6 @@ export class SidebarComponent {
   collapsed: boolean = false;
   navData = navbarData;
   screenWidth = 0;
-
   @Output() onToggleSidebar: EventEmitter<SidebarToggle> = new EventEmitter();
 
   constructor(private router: Router, private authService: AuthService) { }
@@ -27,10 +26,10 @@ export class SidebarComponent {
     this.onToggleSidebar.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
-  closeSidebar(): void {
+ /*  closeSidebar(): void {
     this.collapsed = false;
     this.onToggleSidebar.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
-  }
+  } */
 
   onClick(route: NavDataType) {
     if (route.routerLink == 'login') {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Employee } from '@app/models/employee';
 import { PagingConfig } from '@app/models/paging-config';
 import { TableColumns } from '@app/models/table-columns';
@@ -9,12 +9,12 @@ import { debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
   templateUrl: './table-component.component.html',
   styleUrls: ['./table-component.component.scss']
 })
-export class TableComponentComponent {
+export class TableComponentComponent implements AfterViewInit {
   @Input() tableData: Employee[] = [];
   @Input() tableColumns: TableColumns[] = [];
+  @Input() enableSorting: boolean = false;
   @Input() sortColumn: string = 'name';
   @Input() sortOrder: string = 'asc';
-  @Output() getEmployees: EventEmitter<any> = new EventEmitter();
   @Output() onSort: EventEmitter<any> = new EventEmitter();
   @Output() onEdit: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<any> = new EventEmitter();
@@ -26,7 +26,6 @@ export class TableComponentComponent {
     currentPage: 1,
     totalItems: 0
   };
-
 
   ngAfterViewInit() {
     if (this.searchTextRef) {
@@ -49,15 +48,4 @@ export class TableComponentComponent {
   onSortClick(colName: string, sortOrder: string) {
     this.onSort.emit({ colName, sortOrder });
   }
-
-  onPageChange(args: number) {
-    this.pagingConfig.currentPage = args;
-    this.getEmployees.emit();
-  }
-  onRecordPerPageChange(args: any) {
-    this.pagingConfig.itemsPerPage = args.value;
-    this.pagingConfig.currentPage = 1;
-    this.getEmployees.emit();
-  }
-
 }

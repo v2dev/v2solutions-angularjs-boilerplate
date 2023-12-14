@@ -1,21 +1,25 @@
 <div class="card-body">
-    <div class="mb-3">
-        <input class="form-control" type="text" id="search" placeholder="Search by Name..." autocomplete="off"
-            #searchText>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <input class="form-control" type="text" id="search" placeholder="Search by Name..." autocomplete="off"
+                #searchText>
+        </div>
     </div>
     <table class="table table-bordered table-striped">
-        <thead class="table-dark">
+        <thead class="table-primary">
             <tr>
                 <th *ngFor="let column of tableColumns">{{column?.label}}
-                    <ng-container *ngIf="column.name !=='actions'">
-                        <i class="fa fa-sort" *ngIf="sortColumn !== column.name"
-                            (click)="onSortClick(column.name, 'asc' )"></i>
-                    </ng-container>
-                    <ng-container *ngIf="column.name !=='actions'">
-                        <i class="fa fa-sort-up" *ngIf="sortColumn === column.name && sortOrder === 'asc'"
-                            (click)="onSortClick(column.name, 'desc')"></i>
-                        <i class="fa fa-sort-down" *ngIf="sortColumn === column.name && sortOrder === 'desc'"
-                            (click)="onSortClick(column.name, 'asc')"></i>
+                    <ng-container *ngIf="enableSorting">
+                        <ng-container *ngIf="column.name !=='actions'">
+                            <i class="fa fa-sort" *ngIf="sortColumn !== column.name"
+                                (click)="onSortClick(column.name, 'asc' )"></i>
+                        </ng-container>
+                        <ng-container *ngIf="column.name !=='actions'">
+                            <i class="fa fa-sort-up" *ngIf="sortColumn === column.name && sortOrder === 'asc'"
+                                (click)="onSortClick(column.name, 'desc')"></i>
+                            <i class="fa fa-sort-down" *ngIf="sortColumn === column.name && sortOrder === 'desc'"
+                                (click)="onSortClick(column.name, 'asc')"></i>
+                        </ng-container>
                     </ng-container>
                 </th>
             </tr>
@@ -36,7 +40,4 @@
         </tbody>
     </table>
     <span *ngIf="tableData.length==0">No record found!</span>
-    <app-pagination [itemsPerPageList]="pagingConfig.itemsPerPageList" [itemPerPageCount]="pagingConfig.itemsPerPage"
-        (pageChange)="onPageChange($event)" (recordPerPageChange)="onRecordPerPageChange($event)">
-    </app-pagination>
 </div>
