@@ -4,7 +4,7 @@ import { Employee } from '@app/models/employee';
 import { EmployeeService } from '@app/services/employee/employee.service';
 import { alphabetValidator } from '@app/shared/validators/alphabet-validator';
 import { emailValidator } from '@app/shared/validators/email-validator';
-declare var window: any;
+declare var $: any;
 
 @Component({
   selector: 'add-employee',
@@ -26,7 +26,6 @@ export class AddEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.formModal = new window.bootstrap.Modal(document.getElementById('form'));
   }
 
   createForm() {
@@ -55,11 +54,11 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   openModal() {
-    this.formModal.show();
+    $('#form').modal('show');
   }
 
   closeModal() {
-    this.formModal.hide();
+    $('#form').modal('hide');
   }
 
   onSubmit() {
