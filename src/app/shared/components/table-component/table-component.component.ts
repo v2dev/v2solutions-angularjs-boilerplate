@@ -37,6 +37,10 @@ export class TableComponentComponent implements AfterViewInit {
     }
   }
 
+  trackById(column: any) {
+    return column._id;
+  }
+
   editRecord(empId: string | undefined) {
     this.onEdit.emit(empId);
   }

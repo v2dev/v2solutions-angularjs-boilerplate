@@ -25,7 +25,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let employee of tableData | paginate: pagingConfig;">
+            <tr *ngFor="let employee of tableData | paginate: pagingConfig; trackBy:trackById">
                 <td>{{employee.name}}</td>
                 <td>{{employee.email}}</td>
                 <td>{{employee.dob | date:'dd/MM/yyy'}}</td>

@@ -49,7 +49,7 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.getEmployees(obj).subscribe((res: any) => {
       if (res && res.data) {
         this.employeesData = res.data;
-        this.pagingConfig.totalItems = res.totalEmployees;
+        this.pagingConfig.totalItems = res.totalRecords;
       }
     }, (error) => {
       if (error.status === 403) {
