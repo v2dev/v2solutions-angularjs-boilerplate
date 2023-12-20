@@ -26,7 +26,7 @@ export class AddEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    // this.formModal = new window.bootstrap.Modal(document.getElementById('form'));
+    this.formModal = new window.bootstrap.Modal(document.getElementById('form'));
   }
 
   createForm() {
