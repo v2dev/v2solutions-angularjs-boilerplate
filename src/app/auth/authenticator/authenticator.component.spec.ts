@@ -5,6 +5,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GoogleSigninButtonModule, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { SocialAuthConfig } from '@app/shared/social-auth-config/socialAuthServiceConfig';
 
 describe('AuthenticatorComponent', () => {
   let component: AuthenticatorComponent;
@@ -14,8 +16,9 @@ describe('AuthenticatorComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, ReactiveFormsModule],
-      declarations: [AuthenticatorComponent]
+      imports: [HttpClientTestingModule, ReactiveFormsModule, SocialLoginModule, GoogleSigninButtonModule],
+      declarations: [AuthenticatorComponent],
+      providers: [SocialAuthConfig]
     });
     fixture = TestBed.createComponent(AuthenticatorComponent);
     component = fixture.componentInstance;

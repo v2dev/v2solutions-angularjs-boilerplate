@@ -4,7 +4,7 @@ import { LoginUser, RegisterUser } from '../../models/index';
 import { environment } from 'src/environments/environment.development';
 import { Observable, map, mergeMap } from 'rxjs';
 import { Router } from '@angular/router';
-import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
@@ -30,13 +30,12 @@ export class AuthService {
   }
 
   socialLogin(): Observable<any> {
-    return this.socialAuthService.authState.pipe(map(res => res), mergeMap(data => {
+    return this.socialAuthService.authState.pipe(map((res: SocialUser) => res), mergeMap(data => {
       const obj = {
         token: data.idToken,
       }
       return this.http.post(`${this.baseURL}/verify-google-token`, obj)
-    })
-    );
+    }));
   }
 
   register(userDetails: RegisterUser): Observable<any> {

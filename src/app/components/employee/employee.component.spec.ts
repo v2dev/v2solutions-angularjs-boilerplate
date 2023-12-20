@@ -11,6 +11,8 @@ import { AddEmployeeComponent } from '../add-employee/add-employee.component';
 import { ModalComponent } from '@app/layout/modal/modal.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { GoogleSigninButtonModule, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { SocialAuthConfig } from '@app/shared/social-auth-config/socialAuthServiceConfig';
 
 describe('EmployeeComponent', () => {
   let component: EmployeeComponent;
@@ -20,7 +22,7 @@ describe('EmployeeComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, NgxPaginationModule, ReactiveFormsModule],
+      imports: [HttpClientTestingModule, NgxPaginationModule, ReactiveFormsModule, SocialLoginModule, GoogleSigninButtonModule],
       declarations: [
         EmployeeComponent,
         BreadcrumbComponent,
@@ -28,6 +30,7 @@ describe('EmployeeComponent', () => {
         PaginationComponent,
         ModalComponent,
         AddEmployeeComponent],
+      providers: [SocialAuthConfig]
     });
     fixture = TestBed.createComponent(EmployeeComponent);
     component = fixture.componentInstance;

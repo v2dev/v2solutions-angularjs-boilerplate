@@ -13,7 +13,7 @@ export class TableComponentComponent implements AfterViewInit {
   @Input() tableData: Employee[] = [];
   @Input() tableColumns: TableColumns[] = [];
   @Input() enableSorting: boolean = false;
-  @Input() sortColumn: string = 'name';
+  @Input() sortColumn: string = '';
   @Input() sortOrder: string = 'asc';
   @Output() onSort: EventEmitter<any> = new EventEmitter();
   @Output() onEdit: EventEmitter<any> = new EventEmitter();

@@ -5,6 +5,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { GoogleSigninButtonModule, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { SocialAuthConfig } from '@app/shared/social-auth-config/socialAuthServiceConfig';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -14,8 +16,9 @@ describe('ResetPasswordComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, ReactiveFormsModule],
-      declarations: [ResetPasswordComponent]
+      imports: [HttpClientTestingModule, ReactiveFormsModule, SocialLoginModule, GoogleSigninButtonModule],
+      declarations: [ResetPasswordComponent],
+      providers: [SocialAuthConfig]
     });
     fixture = TestBed.createComponent(ResetPasswordComponent);
     component = fixture.componentInstance;

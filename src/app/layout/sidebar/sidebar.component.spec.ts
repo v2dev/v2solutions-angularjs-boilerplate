@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarComponent } from './sidebar.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
+import { GoogleSigninButtonModule, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { SocialAuthConfig } from '@app/shared/social-auth-config/socialAuthServiceConfig';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -11,8 +13,9 @@ describe('SidebarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, SocialLoginModule, GoogleSigninButtonModule],
       declarations: [SidebarComponent],
-      imports: [HttpClientTestingModule],
+      providers: [SocialAuthConfig]
     });
     fixture = TestBed.createComponent(SidebarComponent);
     component = fixture.componentInstance;

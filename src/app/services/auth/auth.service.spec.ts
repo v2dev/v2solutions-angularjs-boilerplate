@@ -3,6 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { environment } from '@environments/environment.development';
+import { GoogleSigninButtonModule, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { SocialAuthConfig } from '@app/shared/social-auth-config/socialAuthServiceConfig';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -11,8 +13,8 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [AuthService]
+      imports: [HttpClientTestingModule, SocialLoginModule, GoogleSigninButtonModule],
+      providers: [SocialAuthConfig]
     });
     service = TestBed.inject(AuthService);
     httpTestingController = TestBed.inject(HttpTestingController);

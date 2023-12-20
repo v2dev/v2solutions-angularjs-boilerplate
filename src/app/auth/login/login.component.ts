@@ -1,10 +1,8 @@
-import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth/auth.service';
-import { emailValidator } from '@app/shared/validators/email-validator';
-import { map, mergeMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -17,14 +15,12 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   user: string = '';
   showPassword: any;
-  socialUser!: SocialUser;
-  isLoggedin?: boolean;
+  routerSubscription!: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router,
-    private socialAuthService: SocialAuthService) {
+    private router: Router) {
     if (this.authService.isAuthenticatedUser()) {
       this.router.navigate(['home']);
     }

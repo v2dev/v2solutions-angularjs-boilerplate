@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { GoogleSigninButtonModule, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { SocialAuthConfig } from '@app/shared/social-auth-config/socialAuthServiceConfig';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -14,8 +16,9 @@ describe('RegisterComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, ReactiveFormsModule, SocialLoginModule, GoogleSigninButtonModule],
       declarations: [RegisterComponent],
-      imports: [HttpClientTestingModule, ReactiveFormsModule]
+      providers: [SocialAuthConfig]
     });
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
