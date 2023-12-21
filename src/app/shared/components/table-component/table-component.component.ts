@@ -29,8 +29,9 @@ export class TableComponentComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     if (this.searchTextRef) {
-      fromEvent(this.searchTextRef.nativeElement, 'keyup')
-        .pipe(debounceTime(500), distinctUntilChanged()).subscribe((res: any) => {
+      fromEvent(this.searchTextRef.nativeElement, 'keyup').pipe(
+        debounceTime(500),
+        distinctUntilChanged()).subscribe((res: any) => {
           const searchText = this.searchTextRef.nativeElement.value;
           this.onSearch.emit(searchText);
         })
