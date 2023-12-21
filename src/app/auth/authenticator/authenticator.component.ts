@@ -32,6 +32,7 @@ export class AuthenticatorComponent {
       if (res) {
         this.submitted = false;
         this.authService.setToken(res.jwtToken);
+        this.authService.loggedIn.next(true);
         this.router.navigate(['/home']);
       }
     }, (error) => {

@@ -20,13 +20,14 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router) {
-    if (this.authService.isAuthenticatedUser()) {
-      this.router.navigate(['home']);
-    }
-  }
+    private router: Router) { }
 
   ngOnInit(): void {
+    this.authService.isLoggedIn.subscribe(res => {
+      if (res) {
+        this.router.navigate(['home']);
+      }
+    })
     this.createForm();
     this.socialLogin();
   }
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
     this.authService.socialLogin().subscribe(res => {
       if (res && res.success) {
         this.authService.setToken(res.jwtToken);
-        this.authService.isAuthenticated = true;
+        this.authService.loggedIn.next(true);
         this.router.navigate(['/home']);
       }
     })

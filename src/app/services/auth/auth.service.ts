@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginUser, RegisterUser } from '../../models/index';
 import { environment } from 'src/environments/environment.development';
-import { Observable, map, mergeMap } from 'rxjs';
+import { BehaviorSubject, Observable, map, mergeMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
@@ -11,10 +11,9 @@ import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 })
 export class AuthService {
   baseURL: string = environment.apiUrl;
-  isAuthenticated: boolean;
+  loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private router: Router, private socialAuthService: SocialAuthService) {
-    this.isAuthenticated = !!this.getToken();
   }
 
   public getToken(): string | null {
@@ -53,17 +52,17 @@ export class AuthService {
 
   verifyOtp(data: object): Observable<any> {
     return this.http.post(`${this.baseURL}/mfa-verify`, data).pipe(map(response => {
-      this.isAuthenticated = true;
+      this.loggedIn.next(true);;
       return response;
     }));
   }
 
-  isAuthenticatedUser(): boolean {
-    return this.isAuthenticated;
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
   }
 
   logout() {
-    this.isAuthenticated = false;
+    this.loggedIn.next(false);
     localStorage.removeItem('token');
     this.router.navigate(['login']);
   }
