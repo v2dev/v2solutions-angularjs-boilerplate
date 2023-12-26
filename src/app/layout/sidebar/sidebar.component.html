@@ -1,5 +1,5 @@
 <ng-container *ngIf="isLoggedIn$ | async as isLoggedIn">
-    <div class="sidenav" [ngClass]="collapsed? 'sidenav-collapsed' : ''">
+    <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
         <div class="logo-container">
             <button class="logo" (click)="toggleCollapse()"><i class="fa fa-bars"></i></button>
             <div class="logo-text" *ngIf="collapsed">
@@ -8,7 +8,8 @@
             <!-- <button class="btn-close" *ngIf="collapsed" (click)="closeSidebar()"><i class="fa fa-times"></i></button> -->
         </div>
         <ul class="sidenav-nav">
-            <li class="sidenav-nav-item" *ngFor="let data of navData">
+            <li class="sidenav-nav-item" *ngFor="let data of navData"
+                [ngClass]="activePath == data.routerLink ? 'sidenav-active' : ''">
                 <a class="sidenav-nav-link" (click)="onClick(data)" *ngIf="data.visible">
                     <i class="sidenav-link-icon" [class]="data.icon"></i>
                     <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>

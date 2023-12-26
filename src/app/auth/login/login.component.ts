@@ -51,20 +51,22 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.authService.login(this.loginForm.value).subscribe(res => {
-      if (res) {
-        this.user = this.loginForm.value.email;
-        this.authenticator = true;
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value).subscribe(res => {
+        if (res) {
+          this.user = this.loginForm.value.email;
+          this.authenticator = true;
+          this.submitted = false;
+        }
+      }, (error) => {
         this.submitted = false;
-      }
-    }, (error) => {
-      this.submitted = false;
-      if (error?.error?.error) {
-        alert(error.error.error)
-      } else {
-        console.error('Something went wrong:', error);
-      }
-    })
+        if (error?.error?.error) {
+          alert(error.error.error)
+        } else {
+          console.error('Something went wrong:', error);
+        }
+      })
+    }
   }
 
   get form() {

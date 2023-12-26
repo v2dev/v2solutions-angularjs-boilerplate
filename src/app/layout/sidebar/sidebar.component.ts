@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NavDataType, navbarData } from './nav-data';
-import { Router } from '@angular/router';
+import { Router, Event, NavigationStart } from '@angular/router';
 import { AuthService } from '@app/services/auth/auth.service';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Observable } from 'rxjs';
@@ -20,9 +20,20 @@ export class SidebarComponent implements OnInit {
   navData = navbarData;
   screenWidth = 0;
   isLoggedIn$!: Observable<boolean>;
+  activePath: string = 'home';
   @Output() onToggleSidebar: EventEmitter<SidebarToggle> = new EventEmitter();
 
-  constructor(private router: Router, private authService: AuthService, private socialAuthService: SocialAuthService) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private socialAuthService: SocialAuthService
+  ) {
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        this.activePath = event.url.split('/')[1];
+      }
+    })
+  }
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.authService.isLoggedIn;

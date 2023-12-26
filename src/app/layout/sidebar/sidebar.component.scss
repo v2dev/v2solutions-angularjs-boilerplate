@@ -90,6 +90,12 @@
             color: #000;
         }
     }
+    .sidenav-active {
+        .sidenav-nav-link {
+            background-color: #fff;
+            color: #000;
+        }
+    }
 }
 
 .sidenav-collapsed {
