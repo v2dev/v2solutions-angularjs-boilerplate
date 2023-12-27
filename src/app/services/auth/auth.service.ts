@@ -52,7 +52,7 @@ export class AuthService {
 
   verifyOtp(data: object): Observable<any> {
     return this.http.post(`${this.baseURL}/mfa-verify`, data).pipe(map(response => {
-      this.loggedIn.next(true);;
+      this.loggedIn.next(true);
       return response;
     }));
   }

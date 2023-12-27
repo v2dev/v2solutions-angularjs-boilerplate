@@ -36,7 +36,11 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const token = this.authService.getToken();
+    if (token)
+      this.authService.loggedIn.next(true);
     this.isLoggedIn$ = this.authService.isLoggedIn;
+
   }
 
   toggleCollapse(): void {

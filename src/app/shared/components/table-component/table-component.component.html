@@ -11,13 +11,13 @@
                 <th *ngFor="let column of tableColumns">{{column?.label}}
                     <ng-container *ngIf="enableSorting">
                         <ng-container *ngIf="column.name !=='actions'">
-                            <i class="fa fa-sort" *ngIf="sortColumn !== column.name"
+                            <i class="fa fa-sort float-end mt-1" *ngIf="sortColumn !== column.name"
                                 (click)="onSortClick(column.name, 'asc' )"></i>
                         </ng-container>
                         <ng-container *ngIf="column.name !=='actions'">
-                            <i class="fa fa-sort-up" *ngIf="sortColumn === column.name && sortOrder === 'asc'"
+                            <i class="fa fa-sort-up float-end mt-1" *ngIf="sortColumn === column.name && sortOrder === 'asc'"
                                 (click)="onSortClick(column.name, 'desc')"></i>
-                            <i class="fa fa-sort-down" *ngIf="sortColumn === column.name && sortOrder === 'desc'"
+                            <i class="fa fa-sort-down float-end mt-1" *ngIf="sortColumn === column.name && sortOrder === 'desc'"
                                 (click)="onSortClick(column.name, 'asc')"></i>
                         </ng-container>
                     </ng-container>

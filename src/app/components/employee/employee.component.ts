@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Employee } from '@app/models/employee';
 import { PagingConfig } from '@app/models/paging-config';
 import { AuthService } from '@app/services/auth/auth.service';
