@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Employee } from '@app/models/employee';
+import { Employee, GetEmployee } from '@app/models/employee';
 import { PagingConfig } from '@app/models/paging-config';
 import { AuthService } from '@app/services/auth/auth.service';
 import { EmployeeService } from '@app/services/employee/employee.service';
@@ -39,7 +39,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   getEmployees() {
-    const obj = {
+    const obj: GetEmployee = {
       limit: this.pagingConfig.itemsPerPage,
       page: this.pagingConfig.currentPage,
       filterStr: this.filterStr,
@@ -80,7 +80,7 @@ export class EmployeeComponent implements OnInit {
     this.getEmployees();
   }
 
-  onSorting(args: any) {
+  onSorting(args: { sortOrder: string, colName: string }) {
     this.sortingOrder = args.sortOrder;
     this.sortedColumn = args.colName;
     this.getEmployees();

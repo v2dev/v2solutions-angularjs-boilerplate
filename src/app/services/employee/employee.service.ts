@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Employee } from '@app/models/employee';
+import { Employee, GetEmployee } from '@app/models/employee';
 import { environment } from '@environments/environment.development';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
 
-  getEmployees(obj: any): Observable<any> {
+  getEmployees(obj: GetEmployee): Observable<any> {
     const { limit, page, filterStr, sortOrder, sortColumn } = obj;
     return this.http.get(`${this.baseURL}/employees?limit=${limit}&page=${page}&filter=${filterStr}&sort=${sortOrder}&sortedColumn=${sortColumn}`);
   }

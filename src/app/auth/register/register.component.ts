@@ -11,7 +11,7 @@ import { matchValue } from '@app/shared/validators/match-value-validator';
 })
 export class RegisterComponent {
   registerForm!: FormGroup;
-  cityList: any[] = [
+  cityList = [
     { id: 'in', name: 'India' },
     { id: 'us', name: 'United States' }
   ];

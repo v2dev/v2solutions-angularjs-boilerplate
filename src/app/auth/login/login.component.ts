@@ -14,7 +14,6 @@ export class LoginComponent implements OnInit {
   authenticator: boolean = false;
   submitted: boolean = false;
   user: string = '';
-  showPassword: any;
   routerSubscription!: Subscription;
 
   constructor(

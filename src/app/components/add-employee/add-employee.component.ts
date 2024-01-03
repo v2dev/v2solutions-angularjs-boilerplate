@@ -13,7 +13,6 @@ declare var $: any;
 })
 export class AddEmployeeComponent implements OnInit {
   addEmployeeForm!: FormGroup;
-  formModal: any;
   title!: string;
   modalSubmitBtnName = 'Add';
   employeeId: string | undefined;

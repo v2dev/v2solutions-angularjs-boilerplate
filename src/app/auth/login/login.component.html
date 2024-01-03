@@ -10,8 +10,6 @@
                     <div *ngIf="form['email'].errors">
                         <small *ngIf="form['email'].errors?.['required'] && form['email'].touched"
                             class="text-danger">Email is required<br></small>
-                        <!--  <small *ngIf="!form['email'].errors?.['required'] && form['email'].errors?.['emailValidator']" class="text-danger">
-                            Please enter valid email</small> -->
                     </div>
                 </div>
                 <div class="mb-2">
@@ -19,15 +17,10 @@
                     <div class="input-group">
                         <input type="password" class="form-control" id="password" placeholder="Enter your password"
                             formControlName="password" />
-                        <!-- <ng-container class="input-group-text"><i class="fa fa-eye"
-                                *ngIf="showPassword; else auth "></i></ng-container>
-                        <ng-template  class="input-group-text"><i class="fa fa-eye-slash"></i></ng-template> -->
                     </div>
                     <div *ngIf="form['password'].errors">
                         <small *ngIf="form['password'].errors?.['required'] && form['password'].touched"
                             class="text-danger">Password is required<br></small>
-                        <!-- <small *ngIf="form['password'].errors?.['minlength']" class="text-danger">
-                            Password should be atleast 8 character long</small> -->
                     </div>
                 </div>
                 <div class="my-3">

@@ -6,3 +6,11 @@ export interface Employee {
     designation: string,
     education: string
 }
+
+export interface GetEmployee {
+    limit: number,
+    page: number,
+    filterStr: string,
+    sortOrder: string,
+    sortColumn: string
+}
