@@ -16,10 +16,10 @@ export class PaginationComponent {
   autoHide: boolean = true;
   responsive: boolean = true;
 
-  onPageChange(event: Event) {
+  onPageChange(event: any) {
     this.pageChange.emit(event);
   }
-  onRecordPerPageChange(event: Event): void {
+  onRecordPerPageChange(event: any): void {
     this.recordPerPageChange.emit(event);
   }
 }
