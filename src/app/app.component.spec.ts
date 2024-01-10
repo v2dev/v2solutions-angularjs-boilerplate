@@ -1,16 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { SidebarComponent } from './layout/sidebar/sidebar.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { GoogleSigninButtonModule, SocialLoginModule } from '@abacritt/angularx-social-login';
-import { SocialAuthConfig } from './shared/social-auth-config/socialAuthServiceConfig';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule, RouterTestingModule, SocialLoginModule, GoogleSigninButtonModule],
-    declarations: [AppComponent, SidebarComponent],
-    providers: [SocialAuthConfig]
+    imports: [RouterTestingModule],
+    declarations: [AppComponent]
   }));
 
   it('should create the app', () => {
@@ -19,9 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'Angular Boilerplate Accelerator'`, () => {
+  it(`should have as title 'base-project'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Angular Boilerplate Accelerator');
+    expect(app.title).toEqual('base-project');
+  });
+
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('.content span')?.textContent).toContain('base-project app is running!');
   });
 });

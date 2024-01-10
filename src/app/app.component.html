@@ -1,6 +1,39 @@
-<main>
-  <app-sidebar (onToggleSidebar)="onToggleSidebar($event)"></app-sidebar>
-  <div class="display-area p-3" [ngClass]="{'display-area-shrink':isSidebarCollapsed }">
-    <router-outlet></router-outlet>
+<div [ngClass]="{ 'authorized-container': isAuthorized }">
+  <div class="p-2" *ngIf="isAuthorized" id="header" #headerElement>
+    <app-header class="w-100"></app-header>
   </div>
-</main>
+  <div [ngClass]="{ 'd-flex': isAuthorized }" id="main-container" #mainContainer>
+    <div class="d-none d-lg-block" *ngIf="menuPosition === 'side' && isAuthorized" id="side-menu">
+      <app-slide-menu [menuList]="menu"></app-slide-menu>
+    </div>
+    <div [ngClass]="{ 'action-container p-3': isAuthorized }">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <div class="p-1" id="footer" *ngIf="isFooterEnable && isAuthorized" #footerElement>
+    <!-- <app-footer></app-footer> -->
+  </div>
+</div>
+
+<p-toast position="bottom-left" class="prompt-user" key="confirm" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div class="d-flex align-items-center">
+      <i class="pi pi-exclamation-triangle"></i>
+      <span class="ms-2">A new version of the application is available!</span>
+      <button type="button" pButton (click)="onReload()" label="Update" class="p-button-success ms-2"></button>
+    </div>
+  </ng-template>
+</p-toast>
+
+<p-toast
+  [showTransformOptions]="'translateY(100%)'"
+  [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+  [showTransitionOptions]="'500ms'"
+  [hideTransitionOptions]="'500ms'"
+  [showTransformOptions]="'translateX(100%)'">
+</p-toast>
+
+<p-blockUI [blocked]="isUIBlocked">
+  <em class="pi pi-spin pi-spinner block-loader"></em>
+  <img class="position-absolute" [src]="constants.blockUILoaderLogo" alt="base-project" />
+</p-blockUI>

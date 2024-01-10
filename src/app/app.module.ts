@@ -1,48 +1,51 @@
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { BlockUIModule } from 'primeng/blockui';
+import { MenuModule } from 'primeng/menu';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { environment } from './../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './auth/auth.module';
-import { HttpClientModule } from '@angular/common/http';
-import { NgxPaginationModule } from 'ngx-pagination';
-
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { SidebarComponent } from './layout/sidebar/sidebar.component';
-import { EmployeeComponent } from './components/employee/employee.component';
-import { tokenInterceptorProviders } from './interceptors';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ModalComponent } from './layout/modal/modal.component';
-import { ConfirmationModalComponent } from './layout/confirmation-modal/confirmation-modal.component';
-import { TableComponentComponent } from './shared/components/table-component/table-component.component';
-import { PaginationComponent } from './layout/pagination/pagination.component';
-import { BreadcrumbComponent } from './layout/breadcrumb/breadcrumb.component';
-import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
-
+import { ServerErrorHandlerInterceptor } from './core/interceptor';
+import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { SlideMenuComponent } from './shared/components/slide-menu/slide-menu.component';
+import { SharedModule } from './shared/modules/shared.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    EmployeeComponent,
-    SidebarComponent,
-    ModalComponent,
-    ConfirmationModalComponent,
-    TableComponentComponent,
-    PaginationComponent,
-    BreadcrumbComponent,
-    AddEmployeeComponent,
-  ],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, SlideMenuComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule,
+    BrowserAnimationsModule,
+    SharedModule,
+    MenuModule,
     HttpClientModule,
-    ReactiveFormsModule,
-    NgxPaginationModule
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.enableAutoUpdateCheck,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
+    PanelMenuModule,
+    BlockUIModule,
   ],
-  exports: [],
-  providers: [tokenInterceptorProviders],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerErrorHandlerInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

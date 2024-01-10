@@ -1,0 +1,19 @@
+:host {
+  flex: 0 0 50%;
+  margin: 1rem 0;
+}
+.limitTextHeight {
+  height: 37px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.showTextHeight {
+  overflow: visible;
+  height: auto;
+}
+.link {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: larger;
+}

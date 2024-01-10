@@ -1,0 +1,23 @@
+<div class="login-container">
+  <p-card>
+    <div class="logo d-flex align-items-center justify-content-center">
+      <img src="./../../../../assets/images/logo-img.png" alt="logo" />
+      <h4 class="mb-0 ms-1">Base Project</h4>
+    </div>
+    <div class="row mt-4">
+      <form>
+        <div class="col-12">
+          <input class="w-100" type="text" name="userName" pInputText [(ngModel)]="userName" placeholder="User Name" />
+        </div>
+        <div class="col-12 mt-3">
+          <p-password name="password" styleClass="w-100" [(ngModel)]="password" [toggleMask]="true" [feedback]="false" placeholder="Password"></p-password>
+        </div>
+        <div class="col-12 mt-3">
+          <p-button styleClass="w-100" label="Login" [loading]="loading" (onClick)="login()"></p-button>
+        </div>
+      </form>
+      <div class="col-6 mt-3">Forgot Password?</div>
+      <div class="col-6 mt-3 text-end">SignUp</div>
+    </div>
+  </p-card>
+</div>

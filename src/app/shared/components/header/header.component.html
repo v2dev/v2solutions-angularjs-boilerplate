@@ -1,0 +1,14 @@
+<div class="d-flex header">
+  <div class="logo d-flex align-items-center">
+    <img src="./../../../../assets/images/logo-img.png" alt="logo" />
+  </div>
+  <div class="user-logo">
+    <p-button (click)="profileMenuTemplate.toggle($event)" icon="pi pi-user" styleClass="p-button-rounded p-button-info p-button-outlined"></p-button>
+  </div>
+</div>
+
+<p-overlayPanel #profileMenuTemplate>
+  <ng-template pTemplate="content">
+    <p-menu [model]="profileMenu" styleClass="header-menu"></p-menu>
+  </ng-template>
+</p-overlayPanel>

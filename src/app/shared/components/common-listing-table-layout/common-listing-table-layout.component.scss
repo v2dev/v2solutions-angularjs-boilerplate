@@ -1,0 +1,22 @@
+@import '../../../../assets/styles/variables.scss';
+.common-table-card {
+  .text-content {
+    @media (max-width: 960px) {
+      margin-left: 16px;
+      text-align: end;
+    }
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  ::ng-deep {
+    .p-datatable .p-datatable-thead {
+      border-bottom: 1px solid $border-color;
+    }
+    .p-datatable .p-datatable-tbody > tr > td {
+      border-bottom: 1px solid $border-color;
+    }
+  }
+}

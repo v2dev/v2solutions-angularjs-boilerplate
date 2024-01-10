@@ -1,14 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@import 'assets/styles/variables.scss';
+@import '~primeng/resources/primeng.min.css';
+@import 'assets/styles/custom.scss';
+body {
+  font-family: var(--font-family) !important;
+  background-color: var(--surface-ground) !important;
+  overflow: hidden;
+  color: var(--text-color) !important;
 }
 
-body {
-    position: relative;
+::-webkit-scrollbar {
+  background: $webkit-scroll !important;
+  cursor: pointer;
+  border-radius: 0.15625rem;
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $webkit-scroll-thumb !important;
+  border-radius: 5px;
+}
+.fs-14 {
+  font-size: 14px;
+}
+.field-box {
+  border: 1px solid $border-color;
+  padding: 1.5rem;
+  border-radius: 7px;
 }
 .card {
-    width: 22rem;
+  border: none !important;
+}
+.float-left {
+  float: left;
+}
+.text-right {
+  text-align: right;
 }

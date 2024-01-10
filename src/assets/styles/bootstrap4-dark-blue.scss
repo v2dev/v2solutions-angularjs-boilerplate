@@ -1,0 +1,11 @@
+@import 'primeng/resources/themes/bootstrap4-dark-blue/theme.css';
+
+//change theme default color
+// :root {
+//   --surface-ground: #000;
+// }
+
+.card {
+  background: var(--surface-card) !important;
+  color: white !important;
+}
