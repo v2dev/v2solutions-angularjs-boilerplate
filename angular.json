@@ -115,16 +115,16 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "prod": {
-              "browserTarget": "base-project:build:prod"
+              "buildTarget": "base-project:build:prod"
             },
             "stage": {
-              "browserTarget": "base-project:build:stage"
+              "buildTarget": "base-project:build:stage"
             },
             "dev": {
-              "browserTarget": "base-project:build:dev"
+              "buildTarget": "base-project:build:dev"
             },
             "local": {
-              "browserTarget": "base-project:build:local"
+              "buildTarget": "base-project:build:local"
             }
           },
           "defaultConfiguration": "local"
@@ -132,7 +132,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "base-project:build"
+            "buildTarget": "base-project:build"
           }
         },
         "test": {
