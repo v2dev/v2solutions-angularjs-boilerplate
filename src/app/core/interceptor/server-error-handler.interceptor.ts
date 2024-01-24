@@ -7,10 +7,11 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { ToasterService } from 'src/app/shared/services/toaster.service';
 
 @Injectable()
 export class ServerErrorHandlerInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private toaster: ToasterService) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -21,16 +22,16 @@ export class ServerErrorHandlerInterceptor implements HttpInterceptor {
         next: (event) => {
           if (event instanceof HttpResponse) {
             if (event.status == 401) {
-              alert('Unauthorized access!');
+              this.toaster.error('Unauthorized access!', 'Error');
             }
           }
           return event;
         },
         error: (error) => {
           if (error.status === 401) {
-            alert('Unauthorized access!');
+            this.toaster.error('Unauthorized access!', 'Error');
           } else if (error.status === 404) {
-            alert('Page Not Found!');
+            this.toaster.error('Page Not Found!', 'Error');
           }
         },
       })

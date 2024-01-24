@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PrimeNGConfig } from 'primeng/api';
 import { AppConstants } from './core/constants/appConstant';
-import { AppRouts, AppSettings } from './core/constants/appSettings';
+import { AppRoutes, AppSettings } from './core/constants/appSettings';
 import { Menu } from './shared/models/common.model';
 import { AuthService } from './shared/services/auth.service';
 import { CheckUpdateService } from './shared/services/check-update.service';
@@ -24,15 +24,15 @@ export class AppComponent {
   constants = AppConstants;
   @ViewChild('headerElement', { static: false }) set content(content: ElementRef) {
     if (content) {
-      this.onResize();
       this.headerElement = content;
+      this.onResize();
     }
   }
   footerElement: any;
   @ViewChild('footerElement', { static: false }) set footerContent(content: ElementRef) {
     if (content) {
-      this.onResize();
       this.footerElement = content;
+      this.onResize();
     }
   }
   height = 0;
@@ -46,14 +46,17 @@ export class AppComponent {
     private readonly menuService: MenuService,
     private readonly cdf: ChangeDetectorRef,
     private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute,
   ) {
     this.authService.isAuthorized.subscribe((res: boolean) => {
-      if (!res && !window.location.href.includes('redirect')) {
-        this.router.navigateByUrl(`/${AppRouts.login}`);
+      if (!res && (this.checkCurrentPath('register') && this.checkCurrentPath('reset-password'))) {
+        this.router.navigateByUrl(`/${AppRoutes.login}`);
       }
       this.isAuthorized = res;
     });
+  }
+
+  checkCurrentPath(path: string) {
+    return !window.location.href.includes(path);
   }
 
   ngOnInit(): void {

@@ -1,43 +1,40 @@
-<div class="card-body">
-    <div class="row">
-        <div class="col-md-4 mb-3">
-            <input class="form-control" type="text" id="search" placeholder="Search by Name..." autocomplete="off"
-                #searchText>
-        </div>
-    </div>
-    <table class="table table-bordered table-striped">
-        <thead class="table-primary">
+<div class="card">
+    <p-table [columns]="tableColumns" [value]="tableData" [tableStyle]="{ 'min-width': '70rem' }"
+        responsiveLayout="stack" [breakpoint]="'960px'" [globalFilterFields]="['name']">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <input type="text" pInputText placeholder="Search.." #search>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let column of tableColumns">{{column?.label}}
-                    <ng-container *ngIf="enableSorting">
-                        <ng-container *ngIf="column.name !=='actions'">
-                            <i class="fa fa-sort float-end mt-1" *ngIf="sortColumn !== column.name"
-                                (click)="onSortClick(column.name, 'asc' )"></i>
-                        </ng-container>
-                        <ng-container *ngIf="column.name !=='actions'">
-                            <i class="fa fa-sort-up float-end mt-1" *ngIf="sortColumn === column.name && sortOrder === 'asc'"
-                                (click)="onSortClick(column.name, 'desc')"></i>
-                            <i class="fa fa-sort-down float-end mt-1" *ngIf="sortColumn === column.name && sortOrder === 'desc'"
-                                (click)="onSortClick(column.name, 'asc')"></i>
-                        </ng-container>
-                    </ng-container>
+                @for (col of columns; track col.name) {
+                <th [pSortableColumn]="col.name"> {{ col.label }}
+                    @if(col.name!=='actions'){ <p-sortIcon [field]="col.name"></p-sortIcon> }
                 </th>
+                }
+                @if(enableEdit || enableDelete){<th>Actions</th>}
             </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let employee of tableData | paginate: pagingConfig; trackBy:trackById">
-                <td>{{employee.name}}</td>
-                <td>{{employee.email}}</td>
-                <td>{{employee.dob | date:'dd/MM/yyy'}}</td>
-                <td>{{employee.designation}}</td>
-                <td>{{employee.education}}</td>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                @for(col of columns; track col.name) {
+                <td> {{ rowData[col.name] }} </td>
+                }
+
+                @if(enableEdit || enableDelete){
                 <td>
-                    <i class="fa fa-pencil me-3" data-bs-target="#staticBackdrop"
-                        (click)="editRecord(employee._id)"></i>
-                    <i class="fa fa-trash" (click)="deleteRecord(employee._id)"></i>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        @if(enableEdit){<button pButton pRipple type="button" icon="pi pi-pencil"
+                            class="p-button-rounded p-button-text" (click)="editRecord(rowData)"></button>}
+                        @if(enableDelete){<button pButton pRipple type="button" icon="pi pi-trash"
+                            class="p-button-rounded p-button-text p-button-danger" (click)="deleteRecord(rowData)"></button>}
+                    </div>
                 </td>
+                }
             </tr>
-        </tbody>
-    </table>
-    <span *ngIf="tableData.length==0">No record found!</span>
+        </ng-template>
+    </p-table>
 </div>

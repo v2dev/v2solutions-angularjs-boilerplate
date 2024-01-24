@@ -1,0 +1,39 @@
+<div class="login-container">
+  <p-card>
+    <div class="mb-4 logo d-flex align-items-center justify-content-center">
+      <img src="./../../../../assets/images/logo-img.png" alt="logo" />
+    </div>
+    @if(displaySection==='login') {
+    <h4 class="mb-0 ms-1">Login</h4>
+    <div class="row mt-4">
+      <form [formGroup]="loginForm">
+        <div class="col-12">
+          <input class="w-100" pInputText placeholder="Username" formControlName="email" autocomplete="off" />
+        </div>
+        @if(form['email'].errors?.['required'] && form['email'].touched){
+        <small class="text-danger">Email is required<br></small>
+        } @else if (!form['email'].errors?.['required'] && form['email'].errors?.['emailValidator']) {
+        <small class="text-danger"> Please enter valid email</small>
+        }
+        <div class="col-12 mt-3">
+          <p-password styleClass="w-100" formControlName="password" [feedback]="false"
+            placeholder="Password"></p-password>
+        </div>
+        @if(form['password'].errors){
+        <small *ngIf="form['password'].errors?.['required'] && form['password'].touched" class="text-danger">Password
+          is required<br></small>
+        }
+        <div class="col-12 mt-3">
+          <p-button styleClass="w-100" label="Login" [disabled]="!loginForm.valid" [loading]="loading"
+            (onClick)="login()"></p-button>
+        </div>
+      </form>
+      <p-button label="Forgot Password?" class="p-0 mt-2" [link]="true" routerLink="/reset-password"></p-button>
+      <div>Don't have account? Sign up <p-button label="here" [link]="true" routerLink="/register"></p-button></div>
+    </div>
+    }
+    @else if(displaySection==='otp') {
+    <app-authenticator [authInfo]="loginForm.value"></app-authenticator>
+    }
+  </p-card>
+</div>

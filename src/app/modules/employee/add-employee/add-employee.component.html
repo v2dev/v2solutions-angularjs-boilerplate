@@ -1,0 +1,64 @@
+<form class="form-group" [formGroup]="addEmployeeForm">
+    <div class="modal-body">
+        <div class="col-12">
+            <label for="name">Full Name</label>
+            <input id="name" pInputText formControlName="name" placeholder="Enter full name" autocomplete="off">
+            <!-- <div *ngIf="form['name'].errors">
+                <small *ngIf="form['name'].errors?.['required'] && form['name'].touched" class="text-danger">
+                    Name is required</small>
+                <small *ngIf="!form['name'].errors?.['required'] && form['name'].errors?.['alphabetValidator']"
+                    class="text-danger">
+                    Please enter valid name</small>
+            </div> -->
+        </div>
+        <div class="col-12 mt-2">
+            <label for="email">Email</label>
+            <input id="email" pInputText formControlName="email" placeholder="Enter email" autocomplete="off">
+            <!-- <div *ngIf="form['email'].errors">
+                <small *ngIf="form['email'].errors?.['required'] && form['email'].touched" class="text-danger">
+                    Email is required</small>
+                <small *ngIf="!form['email'].errors?.['required'] && form['email'].errors?.['emailValidator']"
+                    class="text-danger">
+                    Please enter valid email</small>
+            </div> -->
+        </div>
+        <div class="col-12 mt-2">
+            <label for="dob">Date of birth</label>
+            <input id="dob" type="date" pInputText formControlName="dob" placeholder="DD/MM/YYYY" autocomplete="off"
+                min="1900-01-01" [max]="maxDate">
+            <!-- <div *ngIf="form['dob'].errors">
+                <small *ngIf="form['dob'].errors?.['required'] && form['dob'].touched" class="text-danger">
+                    Date of birth is required</small>
+                <small *ngIf="form['dob'].errors?.['maxlength']" class="text-danger">
+                    date should be in dd-mm-yyyy format only</small>
+            </div> -->
+        </div>
+        <div class="col-12 mt-2">
+            <label for="designation">Designation</label>
+            <input id="designation" pInputText formControlName="designation" placeholder="Enter designation"
+                autocomplete="off">
+            <!-- <div *ngIf="form['designation'].errors">
+                <small *ngIf="form['designation'].errors?.['required'] && form['designation'].touched"
+                    class="text-danger">
+                    Designation is required</small>
+                <small
+                    *ngIf="!form['designation'].errors?.['required'] && form['designation'].errors?.['alphabetValidator']"
+                    class="text-danger"> Please enter valid designation
+                </small>
+            </div> -->
+        </div>
+        <div class="col-12 mt-2">
+            <label for="education">Education</label>
+            <input id="education" pInputText formControlName="education" placeholder="Enter education"
+                autocomplete="off">
+            <!-- <div *ngIf="form['education'].errors">
+                <small *ngIf="form['education'].errors?.['required'] && form['education'].touched" class="text-danger">
+                    Education is required</small>
+                <small
+                    *ngIf="!form['education'].errors?.['required'] && form['education'].errors?.['alphabetValidator']"
+                    class="text-danger">
+                    Please enter valid education</small>
+            </div> -->
+        </div>
+    </div>
+</form>

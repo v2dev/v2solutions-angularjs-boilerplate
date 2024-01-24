@@ -2,13 +2,17 @@ import { PrimeIcons } from 'primeng/api';
 
 export const AppSettings = {
   isUserSignupEnable: true,
-  isFooterEnable: true,
+  isFooterEnable: false,
   menuPosition: 'side',
 };
 
-export const AppRouts = {
+export const AppRoutes = {
   login: 'login',
+  register: 'register',
+  resetPassword: 'reset-password',
   dashboard: 'dashboard',
+  home: 'home',
+  employee: 'employee',
 };
 
 export const AppKeys = {

@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AppKeys, AppRouts } from 'src/app/core/constants/appSettings';
+import { AppKeys } from 'src/app/core/constants/appSettings';
 import { EncryptStorageService } from 'src/app/core/services/encrypt-storage.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { CommonService } from 'src/app/shared/services/common.service';
-import { RequestModel, ResponseModel, UserModel } from './login.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { emailValidator } from 'src/app/shared/validators/email-validator';
 
 @Component({
   selector: 'app-login',
@@ -12,31 +11,38 @@ import { RequestModel, ResponseModel, UserModel } from './login.model';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  loginForm!: FormGroup;
   loading = false;
-  userName = '';
-  password = '';
-  authInfo: RequestModel = new RequestModel();
   termsAndCondition = false;
   isChecked = false;
+  displaySection: string = 'login';
+
   constructor(
-    private readonly router: Router,
+    private formBuilder: FormBuilder,
     private readonly storageService: EncryptStorageService,
-    private readonly authService: AuthService,
-    private readonly commonService: CommonService,
-  ) {
+    private readonly authService: AuthService) {
+    this.createForm();
     this.authService.isAuthorized.next(false);
     this.storageService.clearLocalStorageByKey(AppKeys.authToken);
   }
 
+  createForm() {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, emailValidator()]],
+      password: ['', Validators.required]
+    });
+  }
+
+  get form() {
+    return this.loginForm.controls
+  }
+
   login() {
     this.loading = true;
-    this.authInfo.email = this.userName;
-    this.authInfo.password = this.password;
-    this.authService.login(this.authInfo).subscribe({
+    this.authService.login(this.loginForm.value).subscribe({
       next: (res: any) => {
-        this.storageService.setLocalStorageItem(AppKeys.authToken, res.token);
+        this.displaySection = 'otp';
         this.loading = false;
-        this.router.navigateByUrl(`/${AppRouts.dashboard}`);
       },
       error: (err: any) => {
         this.loading = false;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppRouts } from 'src/app/core/constants/appSettings';
+import { AppRoutes } from 'src/app/core/constants/appSettings';
 import { Menu } from '../models/common.model';
 
 @Injectable({
@@ -17,7 +17,14 @@ export class MenuService {
     {
       label: 'Dashboard',
       icon: 'pi pi-home',
-      routerLink: `${AppRouts.dashboard}`,
+      routerLink: `${AppRoutes.dashboard}`,
+      visible: true,
+      items: [],
+    },
+    {
+      label: 'Employees',
+      icon: 'pi pi-users',
+      routerLink: `${AppRoutes.employee}`,
       visible: true,
       items: [],
     },

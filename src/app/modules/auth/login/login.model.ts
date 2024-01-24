@@ -4,6 +4,22 @@ export class RequestModel {
   rememberMe?: boolean;
 }
 
+export class NewUserModel {
+  name?: string;
+  email?: string;
+  country?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+
+export class ResetPasswordModel {
+  name?: string;
+  email?: string;
+  country?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+
 export class ResponseModel {
   isFirstTime?: boolean;
   token?: string;
@@ -18,4 +34,9 @@ export class UserModel {
   userId?: string;
   agreement?: string;
   chatAgreement?: string;
+}
+
+export class OtpModel {
+  email?: string;
+  mfaToken?: number;
 }

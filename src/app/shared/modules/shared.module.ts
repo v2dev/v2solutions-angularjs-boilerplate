@@ -26,6 +26,7 @@ import { ErrorMessageComponent } from '../components/error-message/error-message
 import { ReadMoreComponent } from '../components/read-more/read-more.component';
 import { AccessControlDirective } from '../directives/access-control.directive';
 import { SetTableHeightDirective } from '../directives/set-table-height.directive';
+import { AutoFocusModule } from 'primeng/autofocus';
 
 const primeNgModules = [
   PasswordModule,
@@ -46,6 +47,7 @@ const primeNgModules = [
   DividerModule,
   CheckboxModule,
   ProgressSpinnerModule,
+  AutoFocusModule
 ];
 
 const commonComponent = [

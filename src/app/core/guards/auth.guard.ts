@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AppKeys, AppRouts } from '../constants/appSettings';
+import { AppKeys, AppRoutes } from '../constants/appSettings';
 import { EncryptStorageService } from '../services/encrypt-storage.service';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class AuthGuard {
     if (token) {
       return true;
     }
-    this.router.navigate([AppRouts.login]);
+    this.router.navigate([AppRoutes.login]);
     return false;
   }
 }

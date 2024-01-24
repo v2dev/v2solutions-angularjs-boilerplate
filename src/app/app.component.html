@@ -6,7 +6,7 @@
     <div class="d-none d-lg-block" *ngIf="menuPosition === 'side' && isAuthorized" id="side-menu">
       <app-slide-menu [menuList]="menu"></app-slide-menu>
     </div>
-    <div [ngClass]="{ 'action-container p-3': isAuthorized }">
+    <div [ngClass]="{ 'action-container p-3 mb-5': isAuthorized }">
       <router-outlet></router-outlet>
     </div>
   </div>
