@@ -4,10 +4,10 @@
             (click)="addNewEmployee()"></button>
     </ng-template>
 </p-toolbar>
-<table-component [tableColumns]="employeesColumns" [tableData]="employeesData" [enableEdit]="true" [enableDelete]="true"
+<table-component [tableColumns]="employeesColumns" [tableData]="employeesData" [tableMinLength]="tableMinLength" [enableEdit]="true" [enableDelete]="true"
     (filter)="onFilter($event)" (onEdit)="editRecord($event)" (onDelete)="deleteRecord($event)"></table-component>
 
-@if (employeesData.length) {
+@if (employeesData && employeesData.length) {
 <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="recordPerPage" [showCurrentPageReport]="true"
     [currentPageReportTemplate]="totalRecords ? 'Showing {first} to {last} of {totalRecords} entries' : ''"
     [totalRecords]="totalRecords" [rowsPerPageOptions]="pageOptions" [showFirstLastIcon]="false">

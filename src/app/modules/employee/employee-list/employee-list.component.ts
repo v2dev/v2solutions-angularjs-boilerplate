@@ -10,6 +10,7 @@ import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dy
 import { PaginatorModule } from 'primeng/paginator';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-employee-list',
@@ -38,6 +39,7 @@ export class EmployeeListComponent implements OnInit {
   ];
   pageOptions: number[] = [5, 10, 25, 50];
   totalRecords: number = 0;
+  tableMinLength: string = '600px'
   recordPerPage: number = 5;
   page: number = 1;
   searchString: string = '';
@@ -62,7 +64,15 @@ export class EmployeeListComponent implements OnInit {
       sortOrder: '',
       sortColumn: ''
     }
-    this.employeeService.getEmployees(obj).subscribe((res: any) => {
+    this.employeeService.getEmployees(obj).pipe(
+      map((res: any) => {
+        res.data.map((response: Employee) => {
+          const date = new Date(response.dob).toLocaleString().slice(0, 10);
+          response.dob = date;
+        })
+        return res;
+      })
+    ).subscribe((res: any) => {
       if (res) {
         this.employeesData = res.data;
         this.totalRecords = res.totalRecords;

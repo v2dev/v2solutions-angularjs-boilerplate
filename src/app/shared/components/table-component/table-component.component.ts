@@ -33,6 +33,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 export class TableComponentComponent implements AfterViewInit {
   @Input() tableColumns: ColumnType[] = [];
   @Input() tableData: any[] = [];
+  @Input() tableMinLength: string = '600px';
   @Input() enableEdit: boolean = false;
   @Input() enableDelete: boolean = false;
   @Output() filter: EventEmitter<any> = new EventEmitter();
