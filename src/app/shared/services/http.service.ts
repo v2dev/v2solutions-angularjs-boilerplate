@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HttpService {
-  constructor(protected readonly httpClient: HttpClient) {}
+  constructor(protected readonly httpClient: HttpClient) { }
 
   get(endpoint: string, resource: any) {
     return this.httpClient.get(endpoint, resource);
@@ -24,7 +24,7 @@ export class HttpService {
     return this.httpClient.delete<ReturnType>(endpoint);
   }
 
-  update<ReturnType, RequestBodyType>(resource: RequestBodyType, endpoint: string): Observable<ReturnType> {
+  update<ReturnType, RequestBodyType>(endpoint: string, resource: RequestBodyType): Observable<ReturnType> {
     return this.httpClient.put<ReturnType>(endpoint, resource);
   }
 

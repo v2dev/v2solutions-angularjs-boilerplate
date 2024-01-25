@@ -6,9 +6,10 @@ import { EmployeeService } from 'src/app/shared/services/employee.service';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { AddEmployeeComponent } from '../add-employee/add-employee.component';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PaginatorModule } from 'primeng/paginator';
 import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-employee-list',
@@ -19,6 +20,8 @@ import { MessageService } from 'primeng/api';
     ToolbarModule, ButtonModule,
     AddEmployeeComponent,
     PaginatorModule,
+    DynamicDialogModule,
+    DialogModule
   ],
   providers: [DialogService],
   templateUrl: './employee-list.component.html',
@@ -38,14 +41,14 @@ export class EmployeeListComponent implements OnInit {
   recordPerPage: number = 5;
   page: number = 1;
   searchString: string = '';
+  showAddForm: boolean = false;
+  displayHeaderTitle: string = 'Add New Employee';
 
   @ViewChild(AddEmployeeComponent) addEmployeeComponent?: AddEmployeeComponent;
   submitted: boolean = false;
   ref: DynamicDialogRef | undefined;
 
-  constructor(private employeeService: EmployeeService,
-    private dialogService: DialogService,
-    private messageService: MessageService) { }
+  constructor(private employeeService: EmployeeService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getEmployees();
@@ -72,39 +75,37 @@ export class EmployeeListComponent implements OnInit {
     this.getEmployees();
   }
 
-
   onPageChange(event: any) {
     this.page = event.page + 1;
     this.recordPerPage = event.rows;
     this.getEmployees();
   }
 
-
-  addNew() {
-    this.ref = this.dialogService.open(AddEmployeeComponent, {
-      header: 'Add New Employee',
-      width: '40%',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
-      maximizable: true,
-      footer: ''
-    });
-
-    this.ref.onClose.subscribe((product: any) => {
-      if (product) {
-        debugger
-      }
-    });
+  addNewEmployee() {
+    this.displayHeaderTitle = 'Add new employee';
+    this.showAddForm = true;
+    this.addEmployeeComponent?.addEmployee();
   }
 
   editRecord(rowData: Employee) {
-    debugger
+    this.displayHeaderTitle = 'Update Employee';
+    this.showAddForm = true;
+    this.addEmployeeComponent?.updateEmployee(rowData);
+  }
+
+  onSubmit() {
+    this.addEmployeeComponent?.submitForm();
+  }
+
+  onDialogClose() {
+    this.showAddForm = false;
   }
 
   deleteRecord(rowData: Employee) {
     this.employeeService.deleteEmployee(rowData._id).subscribe((response) => {
       if (response && response.message) {
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: response.message, life: 3000 });
+        this.getEmployees();
       }
     })
   }

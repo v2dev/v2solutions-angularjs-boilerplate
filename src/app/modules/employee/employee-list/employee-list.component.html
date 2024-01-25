@@ -1,17 +1,19 @@
 <p-toolbar styleClass="mb-4 gap-2">
     <ng-template pTemplate="right">
         <button pButton pRipple label="Add Employee" icon="pi pi-plus" class="p-button-success mr-2"
-            (click)="addNew()"></button>
+            (click)="addNewEmployee()"></button>
     </ng-template>
 </p-toolbar>
 <table-component [tableColumns]="employeesColumns" [tableData]="employeesData" [enableEdit]="true" [enableDelete]="true"
     (filter)="onFilter($event)" (onEdit)="editRecord($event)" (onDelete)="deleteRecord($event)"></table-component>
 
 @if (employeesData.length) {
-<div class="">
-    <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="recordPerPage" [showCurrentPageReport]="true"
-        [currentPageReportTemplate]="totalRecords ? 'Showing {first} to {last} of {totalRecords} entries' : ''"
-        [totalRecords]="totalRecords" [rowsPerPageOptions]="pageOptions" [showFirstLastIcon]="false">
-    </p-paginator>
-</div>
+<p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="recordPerPage" [showCurrentPageReport]="true"
+    [currentPageReportTemplate]="totalRecords ? 'Showing {first} to {last} of {totalRecords} entries' : ''"
+    [totalRecords]="totalRecords" [rowsPerPageOptions]="pageOptions" [showFirstLastIcon]="false">
+</p-paginator>
 }
+<dialog-modal [headerTitle]="displayHeaderTitle" [productDialog]="showAddForm" (closeDialog)="onDialogClose()"
+    (submit)="onSubmit()">
+    <add-employee (refreshData)="getEmployees()"></add-employee>
+</dialog-modal>

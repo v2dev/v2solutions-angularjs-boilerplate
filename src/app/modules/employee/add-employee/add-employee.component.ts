@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -7,6 +7,9 @@ import { DialogModalComponent } from 'src/app/shared/components/dialog-modal/dia
 import { alphabetValidator } from 'src/app/shared/validators/alphabet-validator';
 import { emailValidator } from 'src/app/shared/validators/email-validator';
 import { CalendarModule } from 'primeng/calendar';
+import { EmployeeService } from 'src/app/shared/services/employee.service';
+import { MessageService } from 'primeng/api';
+import { Employee } from 'src/app/shared/models/employee.model';
 
 @Component({
   selector: 'add-employee',
@@ -18,8 +21,11 @@ import { CalendarModule } from 'primeng/calendar';
 export class AddEmployeeComponent implements OnInit {
   addEmployeeForm!: FormGroup;
   productDialog: boolean = false;
+  activeForm: string = 'add';
+  updateRecordId?: string;
+  @Output() refreshData = new EventEmitter();
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private employeeService: EmployeeService, private messageService: MessageService) { }
 
   closeDialog() {
     this.productDialog = false;
@@ -45,5 +51,28 @@ export class AddEmployeeComponent implements OnInit {
 
   get maxDate() {
     return new Date().getFullYear() - 18 + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate();
+  }
+
+  addEmployee() {
+    this.addEmployeeForm.reset();
+    this.activeForm = 'add';
+  }
+
+  updateEmployee(employee: Employee) {
+    const date = new Date(employee.dob).toISOString().slice(0, 10);
+    employee.dob = date;
+    this.updateRecordId = employee._id;
+    this.addEmployeeForm.patchValue(employee);
+    this.activeForm = 'update';
+  }
+
+  submitForm() {
+    const submitData = this.activeForm == 'add' ? this.employeeService.addEmployee(this.addEmployeeForm.value) : this.employeeService.updateEmployee(this.addEmployeeForm.value, this.updateRecordId);
+    submitData.subscribe(res => {
+      if (res) {
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.message, life: 3000 });
+        this.refreshData.emit();
+      }
+    })
   }
 }

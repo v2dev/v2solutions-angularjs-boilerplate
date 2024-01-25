@@ -60,8 +60,8 @@ export class TableComponentComponent implements AfterViewInit {
 
   deleteRecord(rowData: object) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
-      header: 'Confirm',
+      message: 'Are you sure you want to delete the selected record?',
+      header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.onDelete.emit(rowData);

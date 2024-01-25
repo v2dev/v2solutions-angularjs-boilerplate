@@ -1,9 +1,10 @@
-<p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" [header]="headerTitle"
-    styleClass="p-fluid">
+<p-dialog (onHide)="closeModal()" [(visible)]="productDialog" [modal]="true" [draggable]="false"
+    [style]="{ width: '450px' }" [header]="headerTitle" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <ng-content></ng-content>
     </ng-template>
-    <ng-template pTemplate="footer">
-        <ng-content select="[footer]"></ng-content>
-    </ng-template>
+    <p-footer>
+        <p-button class="me-2" severity="secondary" label="Cancel" (click)="closeModal()"></p-button>
+        <button type="button" pButton icon="fa-check" label="Submit" (click)="onSubmit($event)"></button>
+    </p-footer>
 </p-dialog>

@@ -7,7 +7,7 @@ export interface Employee {
     _id?: string,
     name: string,
     email: string,
-    dob: Date,
+    dob: Date | string,
     designation: string,
     education: string
 }
