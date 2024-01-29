@@ -61,7 +61,9 @@
                         (onClick)="signUp()"></p-button>
                 </div>
             </form>
-            <div>Already have an account? <p-button label="Login" [link]="true" routerLink="/login"></p-button></div>
+            <div class="mt-3">Already have an account?
+                <a style="text-decoration: none;color: #8dd0ff;" routerLink="/login">Login</a>
+            </div>
         </div>
         }
         @else if(displaySection==='authenticator') {

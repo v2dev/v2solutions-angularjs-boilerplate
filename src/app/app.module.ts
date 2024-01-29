@@ -15,6 +15,8 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { SlideMenuComponent } from './shared/components/slide-menu/slide-menu.component';
 import { SharedModule } from './shared/modules/shared.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { GoogleSigninButtonModule, SocialLoginModule } from '@abacritt/angularx-social-login';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent, SlideMenuComponent],
@@ -22,6 +24,7 @@ import { SharedModule } from './shared/modules/shared.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    AuthModule,
     SharedModule,
     MenuModule,
     HttpClientModule,
@@ -33,6 +36,8 @@ import { SharedModule } from './shared/modules/shared.module';
     }),
     PanelMenuModule,
     BlockUIModule,
+    SocialLoginModule,
+    GoogleSigninButtonModule
   ],
   providers: [
     {

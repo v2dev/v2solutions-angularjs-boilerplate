@@ -29,7 +29,12 @@
         </div>
       </form>
       <p-button label="Forgot Password?" class="p-0 mt-2" [link]="true" routerLink="/reset-password"></p-button>
-      <div>Don't have account? Sign up <p-button label="here" [link]="true" routerLink="/register"></p-button></div>
+      <div>Don't have account? Sign up
+        <a style="text-decoration: none;color: #8dd0ff;" routerLink="/register">here</a>
+      </div>
+      <div class="ms-3 mt-3">
+        <asl-google-signin-button type='icon' size='large' shape="rectangular"></asl-google-signin-button>
+      </div>
     </div>
     }
     @else if(displaySection==='otp') {

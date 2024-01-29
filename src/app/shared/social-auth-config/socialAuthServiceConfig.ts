@@ -1,5 +1,5 @@
 import { GoogleLoginProvider, SocialAuthServiceConfig } from "@abacritt/angularx-social-login";
-import { environment } from "@environments/environment.development";
+import { environment } from "src/environments/environment";
 
 export const SocialAuthConfig = [
     {
@@ -11,7 +11,10 @@ export const SocialAuthConfig = [
                     id: GoogleLoginProvider.PROVIDER_ID,
                     provider: new GoogleLoginProvider(environment.GOOGLE_CLIENT_ID)
                 }
-            ]
+            ],
+            onError: (err) => {
+                console.error(err);
+            },
         } as SocialAuthServiceConfig,
     }
 ]
