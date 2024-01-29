@@ -21,7 +21,7 @@ import { numericValidator } from 'src/app/shared/validators/numeric-validator';
     InputTextModule,
     CardModule,
     ButtonModule,
-    PasswordModule, 
+    PasswordModule,
     RouterModule],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss'
@@ -37,22 +37,24 @@ export class ResetPasswordComponent {
     private toaster: ToasterService,
     private router: Router,
     private formBuilder: FormBuilder) {
-      this.createForgotPasswordForm();
+    this.createForgotPasswordForm();
   }
 
   forgotPasswordSubmit() {
-    this.loading = true;
-    this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe({
-      next: (res: any) => {
-        this.toaster.success(res.message, 'Success');
-        this.createResetPasswordForm();
-        this.displaySection = 'authenticator';
-        this.loading = false;
-      },
-      error: (err: any) => {
-        this.loading = false;
-      },
-    });
+    if (this.forgotPasswordForm.valid) {
+      this.loading = true;
+      this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe({
+        next: (res: any) => {
+          this.toaster.success(res.message, 'Success');
+          this.createResetPasswordForm();
+          this.displaySection = 'authenticator';
+          this.loading = false;
+        },
+        error: (err: any) => {
+          this.loading = false;
+        },
+      });
+    }
   }
 
   createForgotPasswordForm() {
@@ -71,17 +73,19 @@ export class ResetPasswordComponent {
   }
 
   resetPasswordSubmit() {
-    this.loading = true;
-    this.authService.resetPassword(this.resetPasswordForm.value).subscribe({
-      next: (res: any) => {
-        this.toaster.success(res.message, 'Success');
-        this.loading = false;
-        this.router.navigate(['login']);
-      },
-      error: (err: any) => {
-        this.loading = false;
-      },
-    });
+    if (this.resetPasswordForm.valid) {
+      this.loading = true;
+      this.authService.resetPassword(this.resetPasswordForm.value).subscribe({
+        next: (res: any) => {
+          this.toaster.success(res.message, 'Success');
+          this.loading = false;
+          this.router.navigate(['login']);
+        },
+        error: (err: any) => {
+          this.loading = false;
+        },
+      });
+    }
   }
 
   get forgotPassForm() {

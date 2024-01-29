@@ -56,17 +56,19 @@ export class RegisterComponent {
   signUp() {
     const formValues = this.registerForm.value;
     formValues['country'] = formValues.country.id;
-    this.authService.register(formValues).subscribe({
-      next: (res: any) => {
-        this.toaster.success(res.message, 'Success');
-        this.displaySection = 'authenticator';
-        this.loading = false;
-        this.imgUrl = res.qrCodeUrl;
-      },
-      error: (err: any) => {
-        this.loading = false;
-      },
-    });
+    if (this.registerForm.valid) {
+      this.authService.register(formValues).subscribe({
+        next: (res: any) => {
+          this.toaster.success(res.message, 'Success');
+          this.displaySection = 'authenticator';
+          this.loading = false;
+          this.imgUrl = res.qrCodeUrl;
+        },
+        error: (err: any) => {
+          this.loading = false;
+        },
+      });
+    }
   }
 
   get form() {

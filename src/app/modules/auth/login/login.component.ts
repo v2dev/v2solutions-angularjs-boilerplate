@@ -39,14 +39,16 @@ export class LoginComponent {
 
   login() {
     this.loading = true;
-    this.authService.login(this.loginForm.value).subscribe({
-      next: (res: any) => {
-        this.displaySection = 'otp';
-        this.loading = false;
-      },
-      error: (err: any) => {
-        this.loading = false;
-      },
-    });
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (res: any) => {
+          this.displaySection = 'otp';
+          this.loading = false;
+        },
+        error: (err: any) => {
+          this.loading = false;
+        },
+      });
+    }
   }
 }

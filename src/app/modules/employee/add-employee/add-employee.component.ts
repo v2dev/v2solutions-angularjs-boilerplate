@@ -59,20 +59,24 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   updateEmployee(employee: Employee) {
-    const date = new Date(employee.dob).toISOString().slice(0, 10);
-    employee.dob = date;
-    this.updateRecordId = employee._id;
-    this.addEmployeeForm.patchValue(employee);
+    const employeeData = structuredClone(employee);
+    const date = (employeeData.dob).toString();
+    let newDate = date.split("/").reverse().join("-");
+    employeeData.dob = newDate;
+    this.updateRecordId = employeeData._id;
+    this.addEmployeeForm.patchValue(employeeData);
     this.activeForm = 'update';
   }
 
   submitForm() {
-    const submitData = this.activeForm == 'add' ? this.employeeService.addEmployee(this.addEmployeeForm.value) : this.employeeService.updateEmployee(this.addEmployeeForm.value, this.updateRecordId);
-    submitData.subscribe(res => {
-      if (res) {
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.message, life: 3000 });
-        this.refreshData.emit();
-      }
-    })
+    if (this.addEmployeeForm.valid) {
+      const submitData = this.activeForm == 'add' ? this.employeeService.addEmployee(this.addEmployeeForm.value) : this.employeeService.updateEmployee(this.addEmployeeForm.value, this.updateRecordId);
+      submitData.subscribe(res => {
+        if (res) {
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.message, life: 3000 });
+          this.refreshData.emit();
+        }
+      })
+    }
   }
 }

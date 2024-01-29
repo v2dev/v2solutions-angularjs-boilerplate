@@ -48,15 +48,17 @@ export class AuthenticatorComponent {
       email: this.authInfo.email,
       mfaToken: this.authenticatorForm.value.otp
     }
-    this.authService.verifyOtp(data).subscribe({
-      next: (res: any) => {
-        this.loading = false;
-        this.storageService.setLocalStorageItem(AppKeys.authToken, res.jwtToken);
-        this.router.navigateByUrl(`/${AppRoutes.dashboard}`);
-      },
-      error: (err: any) => {
-        this.loading = false;
-      }
-    })
+    if (this.authenticatorForm.valid) {
+      this.authService.verifyOtp(data).subscribe({
+        next: (res: any) => {
+          this.loading = false;
+          this.storageService.setLocalStorageItem(AppKeys.authToken, res.jwtToken);
+          this.router.navigateByUrl(`/${AppRoutes.dashboard}`);
+        },
+        error: (err: any) => {
+          this.loading = false;
+        }
+      })
+    }
   }
 }
