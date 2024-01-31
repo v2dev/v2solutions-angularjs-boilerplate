@@ -1,18 +1,24 @@
 <div [ngClass]="{ 'authorized-container': isAuthorized }">
-  <div class="p-2" *ngIf="isAuthorized" id="header" #headerElement>
+  @if(isAuthorized) {
+  <div class="p-2" id="header" #headerElement>
     <app-header class="w-100"></app-header>
   </div>
+  }
   <div [ngClass]="{ 'd-flex': isAuthorized }" id="main-container" #mainContainer>
-    <div class="d-none d-lg-block" *ngIf="menuPosition === 'side' && isAuthorized" id="side-menu">
+    @if(menuPosition === 'side' && isAuthorized) {
+    <div class="d-none d-lg-block" id="side-menu">
       <app-slide-menu [menuList]="menu"></app-slide-menu>
     </div>
+    }
     <div [ngClass]="{ 'action-container p-3 mb-5': isAuthorized }">
       <router-outlet></router-outlet>
     </div>
   </div>
-  <div class="p-1" id="footer" *ngIf="isFooterEnable && isAuthorized" #footerElement>
+  @if(isFooterEnable && isAuthorized) {
+  <div class="p-1" id="footer" #footerElement>
     <!-- <app-footer></app-footer> -->
   </div>
+  }
 </div>
 
 <p-toast position="bottom-left" class="prompt-user" key="confirm" [baseZIndex]="5000">
@@ -25,12 +31,9 @@
   </ng-template>
 </p-toast>
 
-<p-toast
-  [showTransformOptions]="'translateY(100%)'"
-  [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
-  [showTransitionOptions]="'500ms'"
-  [hideTransitionOptions]="'500ms'"
-  [showTransformOptions]="'translateX(100%)'">
+<p-toast [showTransformOptions]="'translateY(100%)'"
+  [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" [showTransitionOptions]="'500ms'"
+  [hideTransitionOptions]="'500ms'" [showTransformOptions]="'translateX(100%)'">
 </p-toast>
 
 <p-blockUI [blocked]="isUIBlocked">

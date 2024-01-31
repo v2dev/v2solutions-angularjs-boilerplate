@@ -19,9 +19,8 @@
           <p-password styleClass="w-100" formControlName="password" [feedback]="false"
             placeholder="Password"></p-password>
         </div>
-        @if(form['password'].errors){
-        <small *ngIf="form['password'].errors?.['required'] && form['password'].touched" class="text-danger">Password
-          is required<br></small>
+        @if(form['password'].errors && form['password'].errors['required'] && form['password'].touched){
+        <small class="text-danger">Password is required<br></small>
         }
         <div class="col-12 mt-3">
           <p-button styleClass="w-100" label="Login" [disabled]="!loginForm.valid" [loading]="loading"

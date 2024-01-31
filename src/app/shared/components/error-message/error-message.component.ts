@@ -4,9 +4,11 @@ import { AbstractControl, AbstractControlDirective } from '@angular/forms';
 @Component({
   selector: 'app-error-message',
   template: `
-    <small class="text-danger" *ngFor="let errorMessage of listErrors(); let last = last">
+  @for (errorMessage of listErrors(); let last = $last; track $index) {
+    <small class="text-danger">
       {{ last ? errorMessage : '' }}
     </small>
+  }
   `,
   styles: [
     `
