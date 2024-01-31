@@ -1,20 +1,17 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'primeng/inputtext';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogModalComponent } from 'src/app/shared/components/dialog-modal/dialog-modal.component';
 import { alphabetValidator } from 'src/app/shared/validators/alphabet-validator';
 import { emailValidator } from 'src/app/shared/validators/email-validator';
-import { CalendarModule } from 'primeng/calendar';
 import { EmployeeService } from 'src/app/shared/services/employee.service';
 import { MessageService } from 'primeng/api';
 import { Employee } from 'src/app/shared/models/employee.model';
+import { SharedModule } from 'src/app/shared/modules/shared.module';
 
 @Component({
   selector: 'add-employee',
   standalone: true,
-  imports: [DialogModalComponent, ButtonModule, CalendarModule, CardModule, ReactiveFormsModule, InputTextModule],
+  imports: [DialogModalComponent, SharedModule],
   templateUrl: './add-employee.component.html',
   styleUrl: './add-employee.component.scss'
 })

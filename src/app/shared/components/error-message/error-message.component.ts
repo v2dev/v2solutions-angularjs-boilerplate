@@ -4,9 +4,9 @@ import { AbstractControl, AbstractControlDirective } from '@angular/forms';
 @Component({
   selector: 'app-error-message',
   template: `
-  @for (errorMessage of listErrors(); let last = $last; track $index) {
+  @for (errorMessage of listErrors(); let first = $first; track $index) {
     <small class="text-danger">
-      {{ last ? errorMessage : '' }}
+      {{ first ? errorMessage : '' }}
     </small>
   }
   `,
@@ -23,15 +23,18 @@ export class ErrorMessageComponent {
 
   @Input()
   control!: AbstractControl | AbstractControlDirective | undefined;
+  @Input() controlName!: string;
 
   errorMessage: any = {
-    required: () => `This field is required`,
+    required: () => `${this.controlName} is required`,
     email: () => `Invalid email`,
     maxlength: (params: { requiredLength: number }) => `Maximum ${params?.requiredLength} characters are allowed`,
     minlength: (params: { requiredLength: number }) => `Minimum ${params?.requiredLength} characters are required`,
     pattern: () => `Invalid format`,
     whitespace: () => `White spaces are not allowed`,
     misMatch: () => `Passwords don't match`,
+    numeric: () => `${this.controlName} should be numeric only`,
+    alphabet: () => `Invalid ${this.controlName}`,
   };
 
   listErrors(): string[] {
@@ -43,7 +46,7 @@ export class ErrorMessageComponent {
       Object.keys(this.control?.errors).forEach((error) => {
         const errorKey = this.control?.errors ? this.control?.errors[error] : '';
         const errorMsg = errorKey && this.errorMessage[error] ? this.errorMessage[error](errorKey) : '';
-        if (this.control?.touched || this.control?.dirty) {
+        if ((this.control?.touched || this.control?.dirty) && errorMsg != '') {
           this.errorMsgList.push(errorMsg);
         }
       });

@@ -10,9 +10,7 @@ export function emailValidator(): ValidatorFn {
             return null;
         } else {
             return {
-                emailValidator: {
-                    valid: false,
-                },
+                email: true,
             };
         }
     };

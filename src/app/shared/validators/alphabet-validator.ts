@@ -10,9 +10,7 @@ export function alphabetValidator(): ValidatorFn {
             return null;
         } else {
             return {
-                alphabetValidator: {
-                    valid: false,
-                },
+                alphabet: true,
             };
         }
     };

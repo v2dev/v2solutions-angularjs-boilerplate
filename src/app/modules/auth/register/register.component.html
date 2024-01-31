@@ -11,51 +11,27 @@
                     <input class="w-100" id="fullname" pInputText placeholder="Enter full name" formControlName="name"
                         autocomplete="off" />
                 </div>
-                @if(form['name'].errors?.['required'] && form['name'].touched){
-                <small class="text-danger"> Full name is required</small>
-                }
-                @else if (!form['name'].errors?.['required'] &&
-                form['name'].errors?.['alphabetValidator']) {
-                <small class="text-danger"> Please enter valid Name </small>
-                }
+                <app-error-message [control]="form['name']" [controlName]="'Full Name'"></app-error-message>
                 <div class="col-12 mt-2">
                     <input class="w-100" id="email" pInputText placeholder="Enter email" formControlName="email"
                         autocomplete="off" />
                 </div>
-                @if(form['email'].errors?.['required'] && form['email'].touched){
-                <small class="text-danger"> Email is required</small>
-                }
-                @else if(!form['email'].errors?.['required'] && form['email'].errors?.['emailValidator']){
-                <small class="text-danger"> Please enter valid email</small>
-                }
+                <app-error-message [control]="form['email']" [controlName]="'Email'"></app-error-message>
                 <div class="col-12 mt-2">
                     <p-dropdown [options]="cityList" optionLabel="name" placeholder="Select a city"
                         formControlName="country"></p-dropdown>
                 </div>
-                @if(form['country'].errors?.['required'] && form['country'].touched) {
-                <small class="text-danger"> Country is required</small>
-                }
+                <app-error-message [control]="form['country']" [controlName]="'Country'"></app-error-message>
                 <div class="col-12 mt-2">
                     <p-password styleClass="w-100" formControlName="password" placeholder="Enter password"
                         [feedback]="false"></p-password>
                 </div>
-                @if(form['password'].errors?.['required'] && form['password'].touched){
-                <small class="text-danger">Password is required</small>
-                }
-                @else if(form['password'].errors?.['minlength'] ){
-                <small class="text-danger"> Password should be atleast 8 character long</small>
-                }
+                <app-error-message [control]="form['password']" [controlName]="'Password'"></app-error-message>
                 <div class="col-12 mt-2">
                     <p-password styleClass="w-100" formControlName="confirmPassword" placeholder="Re-enter password"
                         [feedback]="false"></p-password>
                 </div>
-                @if(form['confirmPassword'].errors?.['required'] && form['confirmPassword'].touched){
-                <small class="text-danger">Confirm Password is required</small>
-                }
-                @else if (!form['confirmPassword'].errors?.['required'] &&
-                form['confirmPassword'].errors?.['matchValue']) {
-                <small class="text-danger"> Confirm password should be the same as password</small>
-                }
+                <app-error-message [control]="form['confirmPassword']" [controlName]="'Confirm Password'"></app-error-message>
                 <div class="col-12  mt-2">
                     <p-button styleClass="w-100" label="Register" [disabled]="!registerForm.valid" [loading]="loading"
                         (onClick)="signUp()"></p-button>

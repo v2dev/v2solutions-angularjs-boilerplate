@@ -11,7 +11,7 @@ export function matchValue(controlName: string, matchingControlName: string) {
             return null;
         }
         if (control.value !== matchingControl.value) {
-            matchingControl.setErrors({ matchValue: true });
+            matchingControl.setErrors({ misMatch: true });
         } else {
             matchingControl.setErrors(null);
         }

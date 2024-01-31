@@ -16,7 +16,8 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
-  imports: [SharedModule, FormsModule, ReactiveFormsModule, AuthenticatorComponent, RouterModule]
+  imports: [SharedModule, AuthenticatorComponent, RouterModule],
+  providers: [ToasterService]
 })
 export class RegisterComponent {
   registerForm!: FormGroup;

@@ -10,9 +10,7 @@ export function numericValidator(): ValidatorFn {
             return null;
         } else {
             return {
-                numericValidator: {
-                    valid: false,
-                },
+                numeric: true,
             };
         }
     };

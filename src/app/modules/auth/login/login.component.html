@@ -10,18 +10,12 @@
         <div class="col-12">
           <input class="w-100" pInputText placeholder="Username" formControlName="email" autocomplete="off" />
         </div>
-        @if(form['email'].errors?.['required'] && form['email'].touched){
-        <small class="text-danger">Email is required<br></small>
-        } @else if (!form['email'].errors?.['required'] && form['email'].errors?.['emailValidator']) {
-        <small class="text-danger"> Please enter valid email</small>
-        }
+        <app-error-message [control]="form['email']" [controlName]="'Email'"></app-error-message>
         <div class="col-12 mt-3">
           <p-password styleClass="w-100" formControlName="password" [feedback]="false"
             placeholder="Password"></p-password>
         </div>
-        @if(form['password'].errors && form['password'].errors['required'] && form['password'].touched){
-        <small class="text-danger">Password is required<br></small>
-        }
+        <app-error-message [control]="form['password']" [controlName]="'Password'"></app-error-message>
         <div class="col-12 mt-3">
           <p-button styleClass="w-100" label="Login" [disabled]="!loginForm.valid" [loading]="loading"
             (onClick)="login()"></p-button>
