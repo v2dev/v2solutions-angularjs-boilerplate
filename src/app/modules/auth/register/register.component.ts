@@ -55,6 +55,7 @@ export class RegisterComponent {
   }
 
   signUp() {
+    this.loading = true;
     const formValues = this.registerForm.value;
     formValues['country'] = formValues.country.id;
     if (this.registerForm.valid) {

@@ -28,7 +28,7 @@ export class CommonListingTableLayoutComponent extends BaseComponent implements 
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    if (this.rowData.length) {
+    if (this.rowData && this.rowData.length) {
       this.setTableContainer();
       this.scrollable = true;
     } else {

@@ -21,9 +21,12 @@
             (onClick)="login()"></p-button>
         </div>
       </form>
-      <p-button label="Forgot Password?" class="p-0 mt-2" [link]="true" routerLink="/reset-password"></p-button>
+      <div class="my-2">
+        <a class="link" routerLink="/reset-password">Forgot Password?</a>
+      </div>
+      <!-- <p-button label="Forgot Password?" class="p-0 mt-2" [link]="true" routerLink="/reset-password"></p-button> -->
       <div>Don't have account? Sign up
-        <a style="text-decoration: none;color: #8dd0ff;" routerLink="/register">here</a>
+        <a class="link" routerLink="/register">here</a>
       </div>
       <div class="ms-3 mt-3">
         <asl-google-signin-button type='icon' size='large' shape="rectangular"></asl-google-signin-button>

@@ -1,5 +1,5 @@
 <span class="text-break" [ngClass]="{ limitTextHeight: isReadMore, showTextHeight: !isReadMore }"
-    [innerHtml]="isReadMore ? content?.slice(0, contentLength) : content"> </span>
+    [innerHtml]="(isReadMore && content) ? content.slice(0, contentLength) : content"> </span>
 @if(content && content.length && content.length> contentLength) {
 <a class="text-primary link cursor-pointer" (click)="showText()">
     {{ isReadMore ? ' ' + ' ...+ ' : ' ' + ' ...- ' }}</a>

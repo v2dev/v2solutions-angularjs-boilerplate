@@ -10,7 +10,7 @@
       <app-slide-menu [menuList]="menu"></app-slide-menu>
     </div>
     }
-    <div [ngClass]="{ 'action-container p-3 mb-5': isAuthorized }">
+    <div class="flex justify-content-center align-items-center" [ngClass]="{ 'action-container p-3 mb-5': isAuthorized }">
       <router-outlet></router-outlet>
     </div>
   </div>

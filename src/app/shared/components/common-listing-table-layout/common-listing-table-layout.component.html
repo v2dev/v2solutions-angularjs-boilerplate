@@ -65,7 +65,7 @@
       </tr>
     </ng-template>
   </p-table>
-  @if(rowData.length) {
+  @if(rowData && rowData.length) {
   <div id="pagination-container">
     <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="itemPerPage" [showCurrentPageReport]="true"
       [currentPageReportTemplate]="totalElements ? 'Showing {first} to {last} of {totalRecords} entries' : ''"

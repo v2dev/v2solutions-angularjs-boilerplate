@@ -32,6 +32,7 @@ export class ResetPasswordComponent {
     private router: Router,
     private formBuilder: FormBuilder) {
     this.createForgotPasswordForm();
+    this.createResetPasswordForm();
   }
 
   forgotPasswordSubmit() {
@@ -40,7 +41,6 @@ export class ResetPasswordComponent {
       this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe({
         next: (res: any) => {
           this.toaster.success(res.message, 'Success');
-          this.createResetPasswordForm();
           this.displaySection = 'authenticator';
           this.loading = false;
         },
