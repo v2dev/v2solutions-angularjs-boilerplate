@@ -31,7 +31,7 @@ describe('RegisterComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should check intial form values', () => {
+  it('Should check initial form values', () => {
     const registerFormGroup = component.registerForm;
     const registerFormValues = {
       name: '',

@@ -21,7 +21,7 @@ describe('AddEmployeeComponent', () => {
     expect(component).toBeTruthy();
   })
 
-  it('Should check intial form values', () => {
+  it('Should check initial form values', () => {
     const addEmployeeFormGroup = component.addEmployeeForm;
     const addEmployeeFormValues = {
       name: '',
