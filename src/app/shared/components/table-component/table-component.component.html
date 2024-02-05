@@ -30,12 +30,19 @@
                         @if(enableEdit){<button pButton pRipple type="button" icon="pi pi-pencil"
                             class="p-button-rounded p-button-text" (click)="editRecord(rowData)"></button>}
                         @if(enableDelete){<button pButton pRipple type="button" icon="pi pi-trash"
-                            class="p-button-rounded p-button-text p-button-danger" (click)="deleteRecord(rowData)"></button>}
+                            class="p-button-rounded p-button-text p-button-danger"
+                            (click)="deleteRecord(rowData)"></button>}
                     </div>
                 </td>
                 }
             </tr>
         </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">No record found.</td>
+            </tr>
+        </ng-template>
     </p-table>
 </div>
-<p-confirmDialog rejectButtonStyleClass="p-button-outlined me-2" [style]="{ width: '500px' }" rejectLabel="Cancel"></p-confirmDialog>
+<p-confirmDialog rejectButtonStyleClass="p-button-outlined me-2" [style]="{ width: '500px' }"
+    rejectLabel="Cancel"></p-confirmDialog>
