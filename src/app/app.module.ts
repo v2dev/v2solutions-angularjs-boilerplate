@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,14 +9,13 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { environment } from './../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ServerErrorHandlerInterceptor } from './core/interceptor';
-import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { SlideMenuComponent } from './shared/components/slide-menu/slide-menu.component';
 import { SharedModule } from './shared/modules/shared.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { GoogleSigninButtonModule, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { jwtInterceptorProviders, serverErrorHandlerInterceptorProviders } from './core/interceptor';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent, SlideMenuComponent],
@@ -39,18 +38,7 @@ import { GoogleSigninButtonModule, SocialLoginModule } from '@abacritt/angularx-
     SocialLoginModule,
     GoogleSigninButtonModule
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ServerErrorHandlerInterceptor,
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true,
-    },
-  ],
+  providers: [jwtInterceptorProviders, serverErrorHandlerInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
