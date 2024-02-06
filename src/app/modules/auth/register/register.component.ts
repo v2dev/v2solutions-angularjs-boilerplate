@@ -27,7 +27,7 @@ export class RegisterComponent {
   userName = '';
   password = '';
   otp!: number;
-  cityList = [
+  countryList = [
     { id: 'in', name: 'India' },
     { id: 'us', name: 'United States' }
   ];

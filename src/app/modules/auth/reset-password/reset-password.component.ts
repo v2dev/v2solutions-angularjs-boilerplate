@@ -40,7 +40,6 @@ export class ResetPasswordComponent {
       this.loading = true;
       this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe({
         next: (res: any) => {
-          this.toaster.success(res.message, 'Success');
           this.displaySection = 'authenticator';
           this.loading = false;
         },
@@ -71,7 +70,6 @@ export class ResetPasswordComponent {
       this.loading = true;
       this.authService.resetPassword(this.resetPasswordForm.value).subscribe({
         next: (res: any) => {
-          this.toaster.success(res.message, 'Success');
           this.loading = false;
           this.router.navigate(['login']);
         },
