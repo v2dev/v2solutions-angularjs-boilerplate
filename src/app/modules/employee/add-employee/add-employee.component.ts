@@ -47,7 +47,10 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   get maxDate() {
-    return new Date().getFullYear() - 18 + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate();
+    const day = (new Date().getDate() < 10) ? '0' + (new Date().getDate()) : (new Date().getDate());
+    const month = ((new Date().getMonth() + 1) < 10) ? '0' + (new Date().getMonth() + 1) : (new Date().getMonth() + 1);
+    const date = new Date().getFullYear() - 18 + '-' + month + '-' + day;
+    return date;
   }
 
   addEmployee() {
