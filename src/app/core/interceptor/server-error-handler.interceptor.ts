@@ -39,6 +39,8 @@ export class ServerErrorHandlerInterceptor implements HttpInterceptor {
             }
           } else if (error.status === 404) {
             this.toaster.error('Page Not Found!', 'Error');
+          } else if (error.error && error.error.error) {
+            this.toaster.error(error.error.error, 'Error');
           }
         },
       })
