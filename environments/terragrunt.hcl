@@ -22,8 +22,8 @@ generate "provider"{
 	EOF
 }
 
-include "env" {
-    path = find_in_parent_folders("env.hcl")
-    expose = true
-    merge_strategy = "no_merge"
-}
+// include "env" {
+//     path = find_in_parent_folders("env.hcl")
+//     expose = true
+//     merge_strategy = "no_merge"
+// }
