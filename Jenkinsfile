@@ -28,7 +28,7 @@ pipeline {
                 bat '@echo off'
                 bat 'echo %WORKSPACE%'
                 dir("scripts") {
-                    bat "echo pwd is: $pwd"
+                    // bat "echo 'pwd is:' pwd()"
                     // bat './configTerragrunt.bat ENVIRONMENT %ENVIRONMENT% %WORKSPACE%'
                     bat './configTerragrunt.bat %WORKSPACE%'
                 }
