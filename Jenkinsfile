@@ -14,15 +14,15 @@ pipeline {
                 git branch: 'feature/devops_sagar', credentialsId: 'git_token_cs', url: 'https://github.com/v2dev/v2solutions-angularjs-boilerplate.git'
             }
         }
-        stage("Build React App") {
-            steps {
-                bat '@echo off'
-                bat 'echo %WORKSPACE%'
-                bat "echo 'Building react application'"
-                bat 'npm install'
-                bat 'npm run build'
-            }
-        }
+        // stage("Build React App") {
+        //     steps {
+        //         bat '@echo off'
+        //         bat 'echo %WORKSPACE%'
+        //         bat "echo 'Building react application'"
+        //         bat 'npm install'
+        //         bat 'npm run build'
+        //     }
+        // }
         stage("config infra") {
             steps {
                 bat '@echo off'
