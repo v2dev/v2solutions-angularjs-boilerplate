@@ -18,16 +18,16 @@ inputs = {
 	// bucket_name = "v2-angularjs-boilerplate"
 	env = include.env.locals.env
     bucket_name = dependency.s3.outputs.s3_bucket_name
-    cloudfront_distribution_id = dependency.cloudfront.outputs.cloudfront_distribution_id
+    // cloudfront_distribution_id = dependency.cloudfront.outputs.cloudfront_distribution_id
 }
 
-dependency "cloudfront"{
-	config_path = "../cloudfront"
+// dependency "cloudfront"{
+// 	config_path = "../cloudfront"
 
-	mock_outputs ={
-	    cloudfront_distribution_id = "E1234567891011"
-	}
-}
+// 	mock_outputs ={
+// 	    cloudfront_distribution_id = "E1234567891011"
+// 	}
+// }
 
 dependency "s3"{
 	config_path = "../s3"
