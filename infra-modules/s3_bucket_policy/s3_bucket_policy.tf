@@ -27,8 +27,8 @@ data "aws_iam_policy_document" "allow_cloudfront_access" {
       variable = "aws:SourceArn"
 
       values = [
-        # "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/${var.cloudfront_distribution_id}"
-        "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/*"
+        "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/${var.cloudfront_distribution_id}"
+        # "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/*"
       ]
     }
     

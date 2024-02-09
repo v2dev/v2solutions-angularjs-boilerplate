@@ -14,5 +14,5 @@ echo Workspace is: %workspace%
 cd ..\environments\poc_angularjs_boilerplate
 @REM cd %workspace%\environments\poc_angularjs_boilerplate
 echo Current Directory after cd: %CD%
-terragrunt run-all destroy --terragrunt-non-interactive
-@REM terragrunt run-all apply --terragrunt-non-interactive
+@REM terragrunt run-all destroy --terragrunt-non-interactive
+terragrunt run-all apply --terragrunt-non-interactive
