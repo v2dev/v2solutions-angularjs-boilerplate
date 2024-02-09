@@ -35,7 +35,17 @@ pipeline {
                 }
             }
         }        
-        
+        stage("create infra") {
+            steps {
+                bat '@echo off'
+                bat 'echo %WORKSPACE%'
+                bat 'echo Create infra Current Directory: %CD%'
+                dir("scripts") {
+                    // bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
+                    bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% us-west-2 %WORKSPACE%'
+                }
+            }
+        }
         // stage("Copy Artifacts to S3") {
         //     steps {
         //         sh 'aws s3 cp ./dist/base-project s3://v2-angularjs-boilerplate --recursive'
