@@ -28,7 +28,9 @@ pipeline {
                 bat '@echo off'
                 bat 'echo %WORKSPACE%'
                 dir("scripts") {
-                    bat './configTerragrunt.bat ENVIRONMENT %ENVIRONMENT% %WORKSPACE%'
+                    bat "echo pwd is: $pwd"
+                    // bat './configTerragrunt.bat ENVIRONMENT %ENVIRONMENT% %WORKSPACE%'
+                    bat './configTerragrunt.bat %WORKSPACE%'
                 }
             }
         }        
@@ -43,7 +45,7 @@ pipeline {
         }
         stage("Copy Artifacts to S3") {
             steps {
-                sh 'aws s3 cp ./dist s3://v2-angularjs-boilerplate --recursive'
+                sh 'aws s3 cp ./dist/base-project s3://v2-angularjs-boilerplate --recursive'
             }
         }
     }
