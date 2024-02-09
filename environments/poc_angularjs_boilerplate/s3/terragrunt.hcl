@@ -13,7 +13,6 @@ include "env"{
 }
 
 inputs = {
-    // env = "poc_angularjs_boilerplate"
     env = include.env.locals.env
     bucket_name = "v2-angularjs-boilerplate"
     versioning_enabled = false

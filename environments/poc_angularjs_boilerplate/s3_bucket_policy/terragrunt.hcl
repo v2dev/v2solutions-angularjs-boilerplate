@@ -13,9 +13,6 @@ include "env"{
 }
 
 inputs = {
-    // env = dependency.env.locals.env
-	// env = "poc_angularjs_boilerplate"
-	// bucket_name = "v2-angularjs-boilerplate"
 	env = include.env.locals.env
     bucket_name = dependency.s3.outputs.s3_bucket_name
     cloudfront_distribution_id = dependency.cloudfront.outputs.cloudfront_distribution_id
