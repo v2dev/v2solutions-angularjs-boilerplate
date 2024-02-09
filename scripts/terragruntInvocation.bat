@@ -11,6 +11,7 @@ set AWS_DEFAULT_REGION=%region%
 
 echo Current Directory: %CD%
 echo Workspace is: %workspace%
-cd %workspace%\environments\poc_angularjs_boilerplate
+cd ..
+@REM cd %workspace%\environments\poc_angularjs_boilerplate
 echo Current Directory after cd: %CD%
 terragrunt run-all apply --terragrunt-non-interactive
