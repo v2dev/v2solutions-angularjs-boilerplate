@@ -27,6 +27,7 @@ pipeline {
             steps {
                 bat '@echo off'
                 bat 'echo %WORKSPACE%'
+                bat 'echo Config infra Current Directory: %CD%'
                 dir("scripts") {
                     // bat "echo 'pwd is:' pwd()"
                     // bat './configTerragrunt.bat ENVIRONMENT %ENVIRONMENT% %WORKSPACE%'
@@ -38,9 +39,10 @@ pipeline {
             steps {
                 bat '@echo off'
                 bat 'echo %WORKSPACE%'
+                bat 'echo Create infra Current Directory: %CD%'
                 dir("scripts") {
-                    bat './terragruntInvocation.bat AKIAYS2NVE5NMCUUUREQ rvEIgqwyMpe/+yFdwK8oXjACo33We1Ikn6ewxeGH us-west-2 %WORKSPACE%'
                     // bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
+                    bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% us-west-2 %WORKSPACE%'
                 }
             }
         }
