@@ -1,14 +1,30 @@
-remote_state{
-	backend = "local"
-	generate  = {
-		path = "backend.tf"
-		if_exists = "overwrite_terragrunt"
-	}
-
-	config ={
-		path = "${path_relative_to_include()}/terraform.tfstate"
-	}
+generate "backend" {
+  path      = "backend.tf"
+  if_exists = "overwrite_terragrunt"
+  contents = <<EOF
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state"
+    key            = "${path_relative_to_include()}/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "my-lock-table"
+  }
 }
+EOF
+}
+
+// remote_state{
+// 	backend = "local"
+// 	generate  = {
+// 		path = "backend.tf"
+// 		if_exists = "overwrite_terragrunt"
+// 	}
+
+// 	config ={
+// 		path = "${path_relative_to_include()}/terraform.tfstate"
+// 	}
+// }
 
 generate "provider"{
 	path = "provider.tf"
@@ -21,9 +37,3 @@ generate "provider"{
 		}
 	EOF
 }
-
-// include "env" {
-//     path = find_in_parent_folders("env.hcl")
-//     expose = true
-//     merge_strategy = "no_merge"
-// }
