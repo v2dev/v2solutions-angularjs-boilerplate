@@ -17,9 +17,11 @@ pipeline{
 
         stage("Build React App") {
             steps {
-                dir(".") {
-                    sh 'npm install'
-                    sh 'npm run build'
+                    bat '@echo off'
+                    bat 'echo %WORKSPACE%'
+                    bat "echo 'Building react application'"
+                    bat 'npm install'
+                    bat 'npm run build'
                 }
             }
         }
