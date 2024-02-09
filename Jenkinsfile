@@ -39,14 +39,15 @@ pipeline {
                 bat '@echo off'
                 bat 'echo %WORKSPACE%'
                 dir("scripts") {
-                    bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
+                    bat './terragruntInvocation.bat AKIAYS2NVE5NMCUUUREQ rvEIgqwyMpe/+yFdwK8oXjACo33We1Ikn6ewxeGH us-west-2 %WORKSPACE%'
+                    // bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
                 }
             }
         }
-        stage("Copy Artifacts to S3") {
-            steps {
-                sh 'aws s3 cp ./dist/base-project s3://v2-angularjs-boilerplate --recursive'
-            }
-        }
+        // stage("Copy Artifacts to S3") {
+        //     steps {
+        //         sh 'aws s3 cp ./dist/base-project s3://v2-angularjs-boilerplate --recursive'
+        //     }
+        // }
     }
 }
