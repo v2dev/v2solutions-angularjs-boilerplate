@@ -41,8 +41,7 @@ pipeline {
                 bat 'echo %WORKSPACE%'
                 bat 'echo Create infra Current Directory: %CD%'
                 dir("scripts") {
-                    // bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
-                    bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% us-west-2 %WORKSPACE%'
+                    bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
                 }
             }
         }
