@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool 'SonarQubeScanner'
-                    def projectKey = "Saas-Boilerplate-Angular"
+                    def projectKey = "SaaS-Boilerplate-Angular"
                     withSonarQubeEnv(SONARQUBE_SERVER) {
                         echo "Current working directory: ${pwd()}"
                         bat "./sonarqube_script.bat ${scannerHome} ${projectKey}"
