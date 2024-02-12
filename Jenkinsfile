@@ -3,15 +3,15 @@ pipeline {
     options {
         skipDefaultCheckout(true)
     }
+
+    // Setup Environment Variables
+    environment {
+        SONARQUBE_CREDENTIALS = credentials('sonar-cred')
+        SONARQUBE_SERVER = 'sonarconfig'
+        SCAN_TOKEN = credentials('angularjs-scan-token')
+    }
+
     stages {
-
-        // Setup Environment Variables
-        environment {
-            SONARQUBE_CREDENTIALS = credentials('sonar-cred')
-            SONARQUBE_SERVER = 'sonarconfig'
-            SCAN_TOKEN = credentials('angularjs-scan-token')
-        }
-
         // Initialise
         stage("Initialise") {
             steps {
