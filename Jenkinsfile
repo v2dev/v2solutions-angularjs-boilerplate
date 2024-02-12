@@ -120,7 +120,7 @@ pipeline {
             steps {
                 bat '@echo off'
                 bat 'echo %WORKSPACE%'
-                bat 'aws s3 cp dist/base-project s3://v2-angularjs-boilerplate --recursive'
+                bat 'aws s3 cp dist/base-project s3://v2-angularjs-boilerplate-plural --recursive'
             }
         }
     }
