@@ -5,11 +5,11 @@ remote_state {
     if_exists = "overwrite"
   }
   config = {
-    bucket         = "angularjs-boilerplate-terraform-state-plural"
+    bucket         = "angularjs-boilerplate-terraform-state"
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = "us-west-2"
     encrypt        = true
-    dynamodb_table = "angularjs-lock-table-plural"
+    dynamodb_table = "angularjs-boilerplate-lock-table-plural"
   }
 }
 
