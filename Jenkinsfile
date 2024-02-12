@@ -59,7 +59,7 @@ pipeline {
         //                 // Send email using the emailext plugin
         //                 emailext body: emailBody,
         //                         subject: 'SonarQube Analysis Report',
-        //                         to: 'sagar.sthorat@gmail.com',
+        //                         to: 'testemail@v2solutions.com',
         //                         mimeType: 'text/html'
         //             } else {
         //                 error "SonarQube Analysis URL is not available. Make sure the previous stage executed successfully."
@@ -68,60 +68,60 @@ pipeline {
         //     }
         // }
 
-        // // Quality Gate Stage
-        // stage('Quality Gate') {
-        //     steps {
-        //         script {
-        //             withSonarQubeEnv(SONARQUBE_SERVER) {
-        //                 def qg = waitForQualityGate()
-        //                 if (qg.status != 'OK') {
-        //                     error "Quality Gate failed: ${qg.status}"
-        //                 }
-        //                 else {
-        //                     echo "Quality Gate Success"
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        // Quality Gate Stage
+        stage('Quality Gate') {
+            steps {
+                script {
+                    withSonarQubeEnv(SONARQUBE_SERVER) {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Quality Gate failed: ${qg.status}"
+                        }
+                        else {
+                            echo "Quality Gate Success"
+                        }
+                    }
+                }
+            }
+        }
 
-        // // Install dependencies and Build React App
-        // stage("Build React App") {
-        //     steps {
-        //         bat '@echo off'
-        //         bat 'echo %WORKSPACE%'
-        //         bat "echo 'Building react application'"
-        //         bat 'npm install'
-        //         bat 'npm run build'
-        //     }
-        // }
-        // // Configure Infrastructure
-        // stage("config infra") {
-        //     steps {
-        //         bat '@echo off'
-        //         bat 'echo %WORKSPACE%'
-        //         dir("scripts") {
-        //             bat './configTerragrunt.bat %WORKSPACE%'
-        //         }
-        //     }
-        // }
-        // // Create Infrastructure        
-        // stage("create infra") {
-        //     steps {
-        //         bat '@echo off'
-        //         bat 'echo %WORKSPACE%'
-        //         dir("scripts") {
-        //             bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
-        //         }
-        //     }
-        // }
-        // // Copy built React code to S3 bucket
-        // stage("Copy Artifacts to S3") {
-        //     steps {
-        //         bat '@echo off'
-        //         bat 'echo %WORKSPACE%'
-        //         bat 'aws s3 cp dist/base-project s3://v2-angularjs-boilerplate --recursive'
-        //     }
-        // }
+        // Install dependencies and Build React App
+        stage("Build React App") {
+            steps {
+                bat '@echo off'
+                bat 'echo %WORKSPACE%'
+                bat "echo 'Building react application'"
+                bat 'npm install'
+                bat 'npm run build'
+            }
+        }
+        // Configure Infrastructure
+        stage("config infra") {
+            steps {
+                bat '@echo off'
+                bat 'echo %WORKSPACE%'
+                dir("scripts") {
+                    bat './configTerragrunt.bat %WORKSPACE%'
+                }
+            }
+        }
+        // Create Infrastructure        
+        stage("create infra") {
+            steps {
+                bat '@echo off'
+                bat 'echo %WORKSPACE%'
+                dir("scripts") {
+                    bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
+                }
+            }
+        }
+        // Copy built React code to S3 bucket
+        stage("Copy Artifacts to S3") {
+            steps {
+                bat '@echo off'
+                bat 'echo %WORKSPACE%'
+                bat 'aws s3 cp dist/base-project s3://v2-angularjs-boilerplate --recursive'
+            }
+        }
     }
 }
