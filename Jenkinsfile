@@ -4,17 +4,19 @@ pipeline {
         skipDefaultCheckout(true)
     }
     stages {
-        // Initialise
-        stage("Initialise") {
-            steps {
-                cleanWs()
-            }
-        }
+
         // Setup Environment Variables
         environment {
             SONARQUBE_CREDENTIALS = credentials('sonar-cred')
             SONARQUBE_SERVER = 'sonarconfig'
             SCAN_TOKEN = credentials('angularjs-scan-token')
+        }
+
+        // Initialise
+        stage("Initialise") {
+            steps {
+                cleanWs()
+            }
         }
 
         // Setting up Git
