@@ -96,25 +96,26 @@ pipeline {
             }
         }
         // Configure Infrastructure
-        // stage("config infra") {
-        //     steps {
-        //         bat '@echo off'
-        //         bat 'echo %WORKSPACE%'
-        //         dir("scripts") {
-        //             bat './configTerragrunt.bat %WORKSPACE%'
-        //         }
-        //     }
-        // }
-        // // Create Infrastructure        
-        // stage("create infra") {
-        //     steps {
-        //         bat '@echo off'
-        //         bat 'echo %WORKSPACE%'
-        //         dir("scripts") {
-        //             bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
-        //         }
-        //     }
-        // }
+        stage("config infra") {
+            steps {
+                bat '@echo off'
+                bat 'echo %WORKSPACE%'
+                dir("scripts") {
+                    bat './configTerragrunt.bat %WORKSPACE%'
+                }
+            }
+        }
+        // Create Infrastructure        
+        stage("create infra") {
+            steps {
+                bat '@echo off'
+                bat 'echo %WORKSPACE%'
+                dir("scripts") {
+                    bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
+                }
+            }
+        }
+        
         // Copy built React code to S3 bucket
         stage("Copy Artifacts to S3") {
             steps {
