@@ -122,7 +122,7 @@ pipeline {
                 script {
                     // Modify environments.prod.ts file with the provided EKS_API_ENDPOINT
                     def eksApiEndpoint = params.EKS_API_ENDPOINT
-                    def filePath = "${WORKSPACE}/src/environments/environments.prod.ts"
+                    def filePath = "${WORKSPACE}/src/environments/environment.prod.ts"
                     // Read the file content
                     def fileContent = readFile(filePath)
                     // Replace the apiUrl value with the provided EKS_API_ENDPOINT
