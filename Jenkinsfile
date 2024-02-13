@@ -91,7 +91,7 @@ pipeline {
                 bat '@echo off'
                 bat 'echo %WORKSPACE%'
                 dir("scripts") {
-                    bat './configTerragrunt.bat EKS_API_ENDPOINT %EKS_API_ENDPOINT% %WORKSPACE%'
+                    bat './configTerragrunt.bat %WORKSPACE%'
                 }
             }
         }
