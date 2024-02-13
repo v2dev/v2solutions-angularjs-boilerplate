@@ -85,23 +85,13 @@ pipeline {
         //     }
         // }
 
-        // Install dependencies and Build React App
-        stage("Build React App") {
-            steps {
-                bat '@echo off'
-                bat 'echo %WORKSPACE%'
-                bat "echo 'Building react application'"
-                bat 'npm install'
-                bat 'npm run build'
-            }
-        }
         // Configure Infrastructure
         stage("config infra") {
             steps {
                 bat '@echo off'
                 bat 'echo %WORKSPACE%'
                 dir("scripts") {
-                    bat './configTerragrunt.bat %WORKSPACE%'
+                    bat './configTerragrunt.bat EKS_API_ENDPOINT %EKS_API_ENDPOINT% %WORKSPACE%'
                 }
             }
         }
@@ -115,7 +105,49 @@ pipeline {
                 }
             }
         }
-        
+
+        // Install dependencies
+        stage("Install dependencies") {
+            steps {
+                bat '@echo off'
+                bat 'echo %WORKSPACE%'
+                bat "echo 'Install Dependencies'"
+                bat 'npm install'
+            }
+        }
+
+        // Install dependencies and Build Angular App
+        stage("Build Angular App") {
+            steps {
+                script {
+                    // Modify environments.prod.ts file with the provided EKS_API_ENDPOINT
+                    def eksApiEndpoint = params.EKS_API_ENDPOINT
+                    def filePath = "${WORKSPACE}/src/environments/environments.prod.ts"
+                    // Read the file content
+                    def fileContent = readFile(filePath)
+                    // Replace the apiUrl value with the provided EKS_API_ENDPOINT
+                    def modifiedContent = fileContent.replaceAll(/apiUrl:\s*'(.*)'/, "apiUrl: '${eksApiEndpoint}:8080'")
+                    // Write the modified content back to the file
+                    writeFile file: filePath, text: modifiedContent
+                }
+                bat '@echo off'
+                bat 'echo %WORKSPACE%'
+                bat "echo 'Building angular application'"
+                bat 'npm run build'
+            }
+        }
+
+
+        // // Install dependencies and Build React App
+        // stage("Build Angular App") {
+        //     steps {
+        //         bat '@echo off'
+        //         bat 'echo %WORKSPACE%'
+        //         bat "echo 'Building angular application'"
+        //         bat 'npm run build'
+        //     }
+        // }
+
         // // Copy built React code to S3 bucket
         // stage("Copy Artifacts to S3") {
         //     steps {
