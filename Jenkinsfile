@@ -133,16 +133,16 @@ pipeline {
             }
         }
 
-        // Destroy Infrastructure        
-        stage("Destroy Infra") {
-            steps {
-                bat '@echo off'
-                bat 'echo %WORKSPACE%'
-                dir("scripts") {
-                    bat './terraformDestroy.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
-                }
-            }
-        }
+        // // Destroy Infrastructure        
+        // stage("Destroy Infra") {
+        //     steps {
+        //         bat '@echo off'
+        //         bat 'echo %WORKSPACE%'
+        //         dir("scripts") {
+        //             bat './terraformDestroy.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
+        //         }
+        //     }
+        // }
 
         // Install dependencies
         stage("Install dependencies") {
