@@ -1,4 +1,4 @@
-resource "aws_s3_bucket_object" "upload_object" {
+resource "aws_s3_object" "upload_object" {
     depends_on = [aws_s3_bucket.s3_bucket]
     for_each = fileset("dist/base-project/", "*")
     bucket = aws_s3_bucket.s3_bucket.id
