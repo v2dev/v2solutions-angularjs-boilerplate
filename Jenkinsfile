@@ -85,26 +85,26 @@ pipeline {
         //     }
         // }
 
-        // Configure Infrastructure
-        stage("config infra") {
-            steps {
-                bat '@echo off'
-                bat 'echo %WORKSPACE%'
-                dir("scripts") {
-                    bat './configTerragrunt.bat %WORKSPACE%'
-                }
-            }
-        }
-        // Create Infrastructure        
-        stage("create infra") {
-            steps {
-                bat '@echo off'
-                bat 'echo %WORKSPACE%'
-                dir("scripts") {
-                    bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
-                }
-            }
-        }
+        // // Configure Infrastructure
+        // stage("config infra") {
+        //     steps {
+        //         bat '@echo off'
+        //         bat 'echo %WORKSPACE%'
+        //         dir("scripts") {
+        //             bat './configTerragrunt.bat %WORKSPACE%'
+        //         }
+        //     }
+        // }
+        // // Create Infrastructure        
+        // stage("create infra") {
+        //     steps {
+        //         bat '@echo off'
+        //         bat 'echo %WORKSPACE%'
+        //         dir("scripts") {
+        //             bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
+        //         }
+        //     }
+        // }
 
         // Install dependencies
         stage("Install dependencies") {
