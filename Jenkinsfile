@@ -116,13 +116,13 @@ pipeline {
             }
         }
         
-        // Copy built React code to S3 bucket
-        stage("Copy Artifacts to S3") {
-            steps {
-                bat '@echo off'
-                bat 'echo %WORKSPACE%'
-                bat 'aws s3 cp dist/base-project s3://v2-angularjs-boilerplate --recursive'
-            }
-        }
+        // // Copy built React code to S3 bucket
+        // stage("Copy Artifacts to S3") {
+        //     steps {
+        //         bat '@echo off'
+        //         bat 'echo %WORKSPACE%'
+        //         bat 'aws s3 cp dist/base-project s3://v2-angularjs-boilerplate --recursive'
+        //     }
+        // }
     }
 }
