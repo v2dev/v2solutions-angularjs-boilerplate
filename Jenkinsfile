@@ -108,25 +108,21 @@ pipeline {
         }
 
         // Conditional stage based on DESTROY_INFRA parameter
-        script {
-            // Check if DESTROY_INFRA parameter is set to "YES", "Yes", "y", or "yes"
-            def destroyInfraFlag = params.DESTROY_INFRA?.toLowerCase()
-            
-            if (destroyInfraFlag in ['yes', 'y']) {
-                // Destroy Infrastructure stage
-                stage("Destroy Infra") {
-                    steps {
+        stage("Conditional Stage") {
+            steps {
+                script {
+                    // Check if DESTROY_INFRA parameter is set to "YES", "Yes", "y", or "yes"
+                    def destroyInfraFlag = params.DESTROY_INFRA?.toLowerCase()
+                    
+                    if (destroyInfraFlag in ['yes', 'y']) {
+                        // Destroy Infrastructure stage
                         bat '@echo off'
                         bat 'echo %WORKSPACE%'
                         dir("scripts") {
                             bat './terraformDestroy.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
                         }
-                    }
-                }
-            } else {
-                // Create Infrastructure stage
-                stage("Create Infra") {
-                    steps {
+                    } else {
+                        // Create Infrastructure stage
                         bat '@echo off'
                         bat 'echo %WORKSPACE%'
                         dir("scripts") {
