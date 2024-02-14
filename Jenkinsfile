@@ -107,28 +107,16 @@ pipeline {
         //     }
         // }
 
-        // Empty S3 bucket if DESTROY_INFRA is set to 'yes'
-        stage("Empty S3 Bucket") {
+        stage('Delete S3 Objects') {
             when {
                 expression { params.DESTROY_INFRA?.toLowerCase() == 'yes' }
             }
             steps {
                 script {
-                    def s3Bucket = 'v2-angularjs-boilerplate'
-                    
-                    // Get the list of object versions
-                    def listObjectsCommand = "aws s3api list-object-versions --bucket ${s3Bucket} --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}'"
-                    def objectVersionsJson = sh(script: listObjectsCommand, returnStdout: true).trim()
-                    
-                    // Parse the JSON string
-                    def jsonSlurper = new groovy.json.JsonSlurper()
-                    def objectVersions = jsonSlurper.parseText(objectVersionsJson)
-                    
-                    // Delete each object version
-                    objectVersions.Objects.each { object ->
-                        def key = object.Key
-                        def versionId = object.VersionId
-                        sh "aws s3api delete-object --bucket ${s3Bucket} --key ${key} --version-id ${versionId}"
+                    dir("scripts") {
+                        // def scriptPath = "${env.WORKSPACE}/scripts/delete-objects.sh"
+                        sh "chmod +x ./delete-objects.sh"
+                        sh "./delete-objects.sh"
                     }
                 }
             }
