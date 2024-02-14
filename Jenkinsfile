@@ -123,8 +123,15 @@ pipeline {
                     // }
                     bat 'echo "RunningS3DeleteObject"'
                     bat '@echo off'
-                    bat 'aws s3api delete-objects --bucket v2-angularjs-boilerplate --delete "$(aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "DeleteMarkers[].{Key:Key,VersionId:VersionId}")"'
-
+                    // bat 'aws s3api delete-objects --bucket v2-angularjs-boilerplate --delete "$(aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "DeleteMarkers[].{Key:Key,VersionId:VersionId}")"'
+                    bat '''
+                        for /f "tokens=* USEBACKQ" %%F in (`aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "DeleteMarkers[].{Key:Key,VersionId:VersionId}" --output text`) do (
+                            aws s3api delete-object --bucket v2-angularjs-boilerplate --key "%%F" --version-id "%%G"
+                        )
+                        for /f "tokens=* USEBACKQ" %%F in (`aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "Versions[].{Key:Key,VersionId:VersionId}" --output text`) do (
+                            aws s3api delete-object --bucket v2-angularjs-boilerplate --key "%%F" --version-id "%%G"
+                        )
+                    '''
                 }
             }
         }
