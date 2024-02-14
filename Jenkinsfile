@@ -119,7 +119,10 @@ pipeline {
                     // Get the list of object versions
                     def listObjectsCommand = "aws s3api list-object-versions --bucket ${s3Bucket} --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}'"
                     def objectVersionsJson = sh(script: listObjectsCommand, returnStdout: true).trim()
-                    def objectVersions = readJSON text: objectVersionsJson
+                    
+                    // Parse the JSON string
+                    def jsonSlurper = new groovy.json.JsonSlurperClassic()
+                    def objectVersions = jsonSlurper.parseText(objectVersionsJson)
                     
                     // Delete each object version
                     objectVersions.Objects.each { object ->
