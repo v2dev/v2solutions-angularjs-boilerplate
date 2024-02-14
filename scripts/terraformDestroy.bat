@@ -10,5 +10,5 @@ set AWS_SECRET_ACCESS_KEY=%secret_key%
 set AWS_DEFAULT_REGION=%region%
 
 cd ..\environments\poc_angularjs_boilerplate
-aws s3 rm s3://v2-angularjs-boilerplate --recursive --include "*"
+aws s3api delete-objects --bucket v2-angularjs-boilerplate --delete "$(aws s3api list-object-versions --bucket "v2-angularjs-boilerplate" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
 terragrunt run-all destroy --terragrunt-non-interactive
