@@ -113,9 +113,11 @@ pipeline {
                 script {
                     // Check if DESTROY_INFRA parameter is set to "YES", "Yes", "y", or "yes"
                     def destroyInfraFlag = params.DESTROY_INFRA?.toLowerCase()
+                    echo 'Destroy Flag: ' destroyInfraFlag
                     
                     if (destroyInfraFlag in ['yes', 'y']) {
                         // Destroy Infrastructure stage
+                        bat 'echo "Running Destroy infra stage"'
                         bat '@echo off'
                         bat 'echo %WORKSPACE%'
                         dir("scripts") {
@@ -123,6 +125,7 @@ pipeline {
                         }
                     } else if (destroyInfraFlag in ['no', 'n']) {
                         // Create Infrastructure stage
+                        bat 'echo "Running Create infra stage"'
                         bat '@echo off'
                         bat 'echo %WORKSPACE%'
                         dir("scripts") {
