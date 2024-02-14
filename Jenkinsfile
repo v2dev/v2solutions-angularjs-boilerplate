@@ -115,8 +115,14 @@ pipeline {
             steps {
                 script {
                     def s3Bucket = 'v2-angularjs-boilerplate'
-                    def awsCliCommand = "aws s3api delete-objects --bucket ${s3Bucket} --delete \"\$(aws s3api list-object-versions --bucket ${s3Bucket} --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')\""
-                    bat(awsCliCommand)
+                    
+                    // Get the list of object versions
+                    def listObjectsCommand = "aws s3api list-object-versions --bucket ${s3Bucket} --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}'"
+                    def objectVersionsJson = sh(script: listObjectsCommand, returnStdout: true).trim()
+                    
+                    // Construct the delete-objects command
+                    def deleteObjectsCommand = "aws s3api delete-objects --bucket ${s3Bucket} --delete '${objectVersionsJson}'"
+                    sh(deleteObjectsCommand)
                 }
             }
         }
