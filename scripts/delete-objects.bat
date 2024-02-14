@@ -6,7 +6,7 @@ aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "Delete
 if %errorlevel% equ 0 (
     echo DeleteMarkers[] found, executing delete-objects for DeleteMarkers
     for /f "usebackq delims=" %%i in (`aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "DeleteMarkers[].{Key:Key,VersionId:VersionId}" --output text`) do (
-        aws s3api delete-object --bucket v2-angularjs-boilerplate --key "%%i" --version-id "%%i"
+        aws s3api delete-object --bucket v2-angularjs-boilerplate --key "%%i" --version-id "%%j"
     )
 )
 
@@ -15,11 +15,12 @@ aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "Versio
 if %errorlevel% equ 0 (
     echo Versions[] found, executing delete-objects for Versions
     for /f "usebackq delims=" %%i in (`aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "Versions[].{Key:Key,VersionId:VersionId}" --output text`) do (
-        aws s3api delete-object --bucket v2-angularjs-boilerplate --key "%%i" --version-id "%%i"
+        aws s3api delete-object --bucket v2-angularjs-boilerplate --key "%%i" --version-id "%%j"
     )
 )
 
 endlocal
+
 
 
 
