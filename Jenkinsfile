@@ -121,7 +121,7 @@ pipeline {
                     def objectVersionsJson = sh(script: listObjectsCommand, returnStdout: true).trim()
                     
                     // Parse the JSON string
-                    def jsonSlurper = new groovy.json.JsonSlurperClassic()
+                    def jsonSlurper = new groovy.json.JsonSlurper()
                     def objectVersions = jsonSlurper.parseText(objectVersionsJson)
                     
                     // Delete each object version
