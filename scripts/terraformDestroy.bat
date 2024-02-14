@@ -10,4 +10,5 @@ set AWS_SECRET_ACCESS_KEY=%secret_key%
 set AWS_DEFAULT_REGION=%region%
 
 cd ..\environments\poc_angularjs_boilerplate
+aws s3 rm s3://v2-angularjs-boilerplate --recursive
 terragrunt run-all destroy --terragrunt-non-interactive
