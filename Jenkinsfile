@@ -119,10 +119,14 @@ pipeline {
                     // Get the list of object versions
                     def listObjectsCommand = "aws s3api list-object-versions --bucket ${s3Bucket} --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}'"
                     def objectVersionsJson = sh(script: listObjectsCommand, returnStdout: true).trim()
+                    def objectVersions = readJSON text: objectVersionsJson
                     
-                    // Construct the delete-objects command
-                    def deleteObjectsCommand = "aws s3api delete-objects --bucket ${s3Bucket} --delete '${objectVersionsJson}'"
-                    sh(deleteObjectsCommand)
+                    // Delete each object version
+                    objectVersions.Objects.each { object ->
+                        def key = object.Key
+                        def versionId = object.VersionId
+                        sh "aws s3api delete-object --bucket ${s3Bucket} --key ${key} --version-id ${versionId}"
+                    }
                 }
             }
         }
