@@ -113,7 +113,7 @@ pipeline {
                 script {
                     // Check if DESTROY_INFRA parameter is set to "YES", "Yes", "y", or "yes"
                     def destroyInfraFlag = params.DESTROY_INFRA?.toLowerCase()
-                    echo 'Destroy Flag: ' destroyInfraFlag
+                    bat 'echo Destroy Flag:  %destroyInfraFlag%'
                     
                     if (destroyInfraFlag in ['yes', 'y']) {
                         // Destroy Infrastructure stage
