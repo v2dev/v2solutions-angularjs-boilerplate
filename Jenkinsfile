@@ -121,7 +121,7 @@ pipeline {
                         dir("scripts") {
                             bat './terraformDestroy.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
                         }
-                    } else {
+                    } else if (destroyInfraFlag in ['no', 'n']) {
                         // Create Infrastructure stage
                         bat '@echo off'
                         bat 'echo %WORKSPACE%'
