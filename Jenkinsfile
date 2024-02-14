@@ -115,6 +115,8 @@ pipeline {
                 script {
                     dir("scripts") {
                         echo "Delete s3 objects"
+                        sh "ls -l" // Debugging output: List files in the directory
+                        sh "pwd" // Debugging output: Print current directory
                         // def scriptPath = "${env.WORKSPACE}/scripts/delete-objects.sh"
                         sh "chmod +x ./delete-objects.sh"
                         sh "./delete-objects.sh"
