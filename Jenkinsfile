@@ -114,6 +114,7 @@ pipeline {
             steps {
                 script {
                     dir("scripts") {
+                        echo "Delete s3 objects"
                         // def scriptPath = "${env.WORKSPACE}/scripts/delete-objects.sh"
                         sh "chmod +x ./delete-objects.sh"
                         sh "./delete-objects.sh"
