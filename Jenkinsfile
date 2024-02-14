@@ -132,6 +132,8 @@ pipeline {
                             bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
                             infraCreated = true
                         }
+                    } else {
+                        error "Invalid value for DESTROY_INFRA parameter. Expected 'yes' or 'no'."
                     }
                 }
             }
