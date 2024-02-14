@@ -96,16 +96,16 @@ pipeline {
             }
         }
 
-        // Create Infrastructure        
-        stage("Create Infra") {
-            steps {
-                bat '@echo off'
-                bat 'echo %WORKSPACE%'
-                dir("scripts") {
-                    bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
-                }
-            }
-        }
+        // // Create Infrastructure        
+        // stage("Create Infra") {
+        //     steps {
+        //         bat '@echo off'
+        //         bat 'echo %WORKSPACE%'
+        //         dir("scripts") {
+        //             bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
+        //         }
+        //     }
+        // }
 
         // Conditional stage based on DESTROY_INFRA parameter
         stage("Conditional Stage") {
