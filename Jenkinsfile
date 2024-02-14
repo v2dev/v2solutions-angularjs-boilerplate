@@ -113,14 +113,18 @@ pipeline {
             }
             steps {
                 script {
-                    dir("scripts") {
-                        echo "Delete s3 objects"
-                        sh "ls -l" // Debugging output: List files in the directory
-                        sh "pwd" // Debugging output: Print current directory
-                        // def scriptPath = "${env.WORKSPACE}/scripts/delete-objects.sh"
-                        sh "chmod +x ./delete-objects.sh"
-                        sh "./delete-objects.sh"
-                    }
+                    // dir("scripts") {
+                    //     echo "Delete s3 objects"
+                    //     sh "ls -l" // Debugging output: List files in the directory
+                    //     sh "pwd" // Debugging output: Print current directory
+                    //     // def scriptPath = "${env.WORKSPACE}/scripts/delete-objects.sh"
+                    //     sh "chmod +x ./delete-objects.sh"
+                    //     sh "./delete-objects.sh"
+                    // }
+                    bat 'echo "RunningS3DeleteObject"'
+                    bat '@echo off'
+                    bat 'aws s3api delete-objects --bucket v2-angularjs-boilerplate --delete "$(aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "DeleteMarkers[].{Key:Key,VersionId:VersionId}")"'
+
                 }
             }
         }
