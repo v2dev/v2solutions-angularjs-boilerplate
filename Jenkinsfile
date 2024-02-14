@@ -127,6 +127,7 @@ pipeline {
                         bat 'echo %WORKSPACE%'
                         dir("scripts") {
                             bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
+                            infraCreated = true
                         }
                     }
                 }
@@ -177,6 +178,9 @@ pipeline {
 
         // Copy built React code to S3 bucket
         stage("Copy Artifacts to S3") {
+            when {
+                expression { infraCreated }
+            }
             steps {
                 bat '@echo off'
                 bat 'echo %WORKSPACE%'
