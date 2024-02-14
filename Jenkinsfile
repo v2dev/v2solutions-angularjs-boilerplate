@@ -216,6 +216,7 @@ pipeline {
             steps {
                 bat '@echo off'
                 bat 'echo %WORKSPACE%'
+                bat 'echo ${infraCreated}'
                 bat 'aws s3 cp dist/base-project s3://v2-angularjs-boilerplate --recursive'
             }
         }

@@ -5,17 +5,22 @@ REM Check if DeleteMarkers[] is present
 aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "DeleteMarkers" > nul 2>&1
 if %errorlevel% equ 0 (
     echo DeleteMarkers[] found, executing delete-objects for DeleteMarkers
-    aws s3api delete-objects --bucket v2-angularjs-boilerplate --delete "$(aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "DeleteMarkers[].{Key:Key,VersionId:VersionId}")"
+    for /f "usebackq delims=" %%i in (`aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "DeleteMarkers[].{Key:Key,VersionId:VersionId}" --output text`) do (
+        aws s3api delete-object --bucket v2-angularjs-boilerplate --key "%%i" --version-id "%%i"
+    )
 )
 
 REM Check if Versions[] is present
 aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "Versions" > nul 2>&1
 if %errorlevel% equ 0 (
     echo Versions[] found, executing delete-objects for Versions
-    aws s3api delete-objects --bucket v2-angularjs-boilerplate --delete "$(aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "Versions[].{Key:Key,VersionId:VersionId}")"
+    for /f "usebackq delims=" %%i in (`aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "Versions[].{Key:Key,VersionId:VersionId}" --output text`) do (
+        aws s3api delete-object --bucket v2-angularjs-boilerplate --key "%%i" --version-id "%%i"
+    )
 )
 
 endlocal
+
 
 
 @REM -------------------------------------
