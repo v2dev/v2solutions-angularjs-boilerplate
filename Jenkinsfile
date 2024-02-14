@@ -107,6 +107,20 @@ pipeline {
         //     }
         // }
 
+        // Empty S3 bucket if DESTROY_INFRA is set to 'yes'
+        stage("Empty S3 Bucket") {
+            when {
+                expression { params.DESTROY_INFRA?.toLowerCase() == 'yes' }
+            }
+            steps {
+                script {
+                    def s3Bucket = 'v2-angularjs-boilerplate'
+                    def awsCliCommand = "aws s3api delete-objects --bucket ${s3Bucket} --delete \"$(aws s3api list-object-versions --bucket ${s3Bucket} --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')\""
+                    bat(awsCliCommand)
+                }
+            }
+        }
+        
         // Conditional stage based on DESTROY_INFRA parameter
         stage("Conditional Stage") {
             steps {
