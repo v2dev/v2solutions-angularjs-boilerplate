@@ -96,17 +96,7 @@ pipeline {
             }
         }
 
-        // // Create Infrastructure        
-        // stage("Create Infra") {
-        //     steps {
-        //         bat '@echo off'
-        //         bat 'echo %WORKSPACE%'
-        //         dir("scripts") {
-        //             bat './terragruntInvocation.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
-        //         }
-        //     }
-        // }
-
+        // Delete s3 bucket objects so as to delete the s3 bucket
         stage('Delete S3 Objects') {
             when {
                 expression { params.DESTROY_INFRA?.toLowerCase() == 'yes' }
@@ -120,15 +110,6 @@ pipeline {
                             bat "delete-objects.bat"
                         }
                     }
-                    // bat 'aws s3api delete-objects --bucket v2-angularjs-boilerplate --delete "$(aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "DeleteMarkers[].{Key:Key,VersionId:VersionId}")"'
-                    // bat '''
-                    //     for /f "tokens=1,2" %%F in ('aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "DeleteMarkers[].{Key:Key,VersionId:VersionId}" --output text') do (
-                    //         aws s3api delete-object --bucket v2-angularjs-boilerplate --key "%%F" --version-id "%%G"
-                    //     )
-                    //     for /f "tokens=1,2" %%F in ('aws s3api list-object-versions --bucket v2-angularjs-boilerplate --query "Versions[].{Key:Key,VersionId:VersionId}" --output text') do (
-                    //         aws s3api delete-object --bucket v2-angularjs-boilerplate --key "%%F" --version-id "%%G"
-                    //     )
-                    // '''
                 }
             }
         }
@@ -166,17 +147,6 @@ pipeline {
             }
         }
 
-        // // Destroy Infrastructure        
-        // stage("Destroy Infra") {
-        //     steps {
-        //         bat '@echo off'
-        //         bat 'echo %WORKSPACE%'
-        //         dir("scripts") {
-        //             bat './terraformDestroy.bat %AWS_ACCESS_KEY_ID% %AWS_SECRET_ACCESS_KEY% %AWS_DEFAULT_REGION% %WORKSPACE%'
-        //         }
-        //     }
-        // }
-
         // Install dependencies
         stage("Install dependencies") {
             steps {
@@ -210,9 +180,9 @@ pipeline {
 
         // Copy built React code to S3 bucket
         stage("Copy Artifacts to S3") {
-            // when {
-            //     expression { infraCreated }
-            // }
+            when {
+                expression { params.DESTROY_INFRA?.toLowerCase() == 'no' }
+            }
             steps {
                 bat '@echo off'
                 bat 'echo %WORKSPACE%'
